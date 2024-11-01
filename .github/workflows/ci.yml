@@ -43,7 +43,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2' # 必要なRubyバージョンに変更
+          ruby-version: '3.3.5'
           bundler-cache: true
 
       - name: Install dependencies
@@ -53,6 +53,9 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          
           bin/rails db:create
           bin/rails db:schema:load
 
