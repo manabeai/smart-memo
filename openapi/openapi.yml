@@ -1,0 +1,209 @@
+openapi: 3.0.0
+info:
+  title: Rails TODO API
+  version: '1.0.0'
+  description: A simple API for managing memos
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            access: メモの読み取りおよび書き込み権限
+
+  schemas:
+    Memo:
+      type: object
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+security:
+  - OAuth2:
+      - access
+
+paths:
+  /memos:
+    get:
+      summary: 自分のメモの一覧を取得
+      operationId: getMyMemos
+      tags:
+        - memos
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: 自分のメモの一覧取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Memo'
+  /memos/new:
+    get:
+      summary: 新しいメモのフォームを取得
+      operationId: getNewMemoForm
+      tags:
+        - memos
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: 新しいメモのフォーム取得に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memo:
+                    $ref: '#/components/schemas/Memo'
+    post:
+      summary: 新しいメモを作成
+      operationId: createMemo
+      tags:
+        - memos
+      security:
+        - OAuth2:
+            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Memo'
+      responses:
+        '201':
+          description: メモ作成に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memo'
+
+  /memos/{id}:
+    get:
+      summary: 特定のメモを取得
+      operationId: getMemoById
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: メモの取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memo'
+        '404':
+          description: メモが見つからない
+
+    patch:
+      summary: メモを更新
+      operationId: updateMemo
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - OAuth2:
+            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Memo'
+      responses:
+        '200':
+          description: メモの変更に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memo'
+        '404':
+          description: メモが見つからない
+
+    delete:
+      summary: メモを削除
+      operationId: deleteMemo
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '204':
+          description: メモの削除に成功
+        '404':
+          description: メモが見つからない
+
+  /tags:
+    get:
+      summary: タグの一覧を取得
+      operationId: getTags
+      tags:
+        - tags
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: タグの一覧取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+    post:
+      summary: 新しいタグを作成
+      operationId: createTag
+      tags:
+        - tags
+      security:
+        - OAuth2:
+            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: タグ作成に成功
+          content:
+            application/json:
+              schema:
+                type: string
+          
