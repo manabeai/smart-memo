@@ -1,0 +1,29 @@
+{
+    "name": "Rails with PostgreSQL and Swagger",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose.yml"
+    ],
+    "service": "rails",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode-remote.remote-containers",
+                "esbenp.prettier-vscode",
+                "42Crunch.vscode-openapi",
+                "Arjun.swagger-viewer",
+                "redhat.vscode-yaml",
+                "Shopify.ruby-extensions-pack",
+                "castwide.solargraph",
+                "ckolkman.vscode-postgres",
+                "eamodio.gitlens"
+            ],
+            "settings": {
+                "terminal.integrated.shell.Linux": "/bin/bash"
+            }
+        }
+    },
+    // "postCreateCommand": "bundle install && rails db:create && rails db:migrate",
+    "overrideCommand": false
+}
