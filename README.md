@@ -17,6 +17,8 @@ docker compose run --rm nextjs yarn
 6, コンソールで以下を実行
 ```bash
 bin/setup
+rails db:setup
+rails db:seed
 ```
 
 7, 以下を実行してサーバーを立ち上げ
