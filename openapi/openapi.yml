@@ -27,6 +27,13 @@ components:
           type: array
           items:
             type: string
+    Tag: 
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
 
 security:
   - OAuth2:
@@ -70,9 +77,10 @@ paths:
                 properties:
                   memo:
                     $ref: '#/components/schemas/Memo'
+                    
     post:
-      summary: 新しいメモを作成
-      operationId: createMemo
+      summary: 新しいメモを一時的に保存し、タグのおすすめを取得
+      operationId: saveMemoDraft
       tags:
         - memos
       security:
@@ -85,13 +93,81 @@ paths:
             schema:
               $ref: '#/components/schemas/Memo'
       responses:
+        '200':
+          description: メモが一時保存に成功し、タグのおすすめを取得
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  suggestedTags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+
+  /memos/draft/{id}:
+    get:
+      summary: 一時保存されたメモを確認
+      operationId: getMemoDraft
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: 一時保存されたメモの取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memo'
+        '404':
+          description: メモが見つからない
+
+    post:
+      summary: 一時保存されたメモを確定して作成
+      operationId: confirmMemo
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - OAuth2:
+            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectedTags:
+                  type: array
+                  items:
+                    type: string
+                content:
+                  type: string
+      responses:
         '201':
           description: メモ作成に成功
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Memo'
-
+        '404':
+          description: 一時保存されたメモが見つからない
   /memos/{id}:
     get:
       summary: 特定のメモを取得
@@ -184,7 +260,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
+                  $ref: '#/components/schemas/Tag'
     post:
       summary: 新しいタグを作成
       operationId: createTag
@@ -194,16 +270,81 @@ paths:
         - OAuth2:
             - access
       requestBody:
+        description: 新しいタグのデータ
         required: true
         content:
           application/json:
             schema:
-              type: string
+              $ref: '#/components/schemas/Tag'
       responses:
         '201':
-          description: タグ作成に成功
+          description: タグの作成に成功
           content:
             application/json:
               schema:
-                type: string
-          
+                $ref: '#/components/schemas/Tag'
+  /tags/new:
+    get:
+      summary: 新しいタグのフォームを取得
+      operationId: getNewTagForm
+      tags:
+        - tags
+      security:
+        - OAuth2:
+            - access
+      responses:
+        '200':
+          description: 新しいタグのフォーム取得に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag:
+                    $ref: '#/components/schemas/Tag'
+  /tags/{id}:
+    put:
+      summary: タグを更新
+      operationId: updateTag
+      tags:
+        - tags
+      security:
+        - OAuth2:
+            - access
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 更新するタグのデータ
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+      responses:
+        '200':
+          description: タグの更新に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+    delete:
+      summary: タグを削除
+      operationId: deleteTag
+      tags:
+        - tags
+      security:
+        - OAuth2:
+            - access
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: タグの削除に成功
