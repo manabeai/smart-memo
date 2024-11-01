@@ -51,7 +51,7 @@ jobs:
 
       - name: Set up database configuration
         run: |
-          cp config/database.yml.ci config/database.yml
+          cp config/database.yml config/database.yml
 
       - name: Set up PostgreSQL
         env:
