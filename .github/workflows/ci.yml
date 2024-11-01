@@ -49,10 +49,6 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
-      - name: Set up database configuration
-        run: |
-          cp config/database.yml config/database.yml
-
       - name: Set up PostgreSQL
         env:
           RAILS_ENV: test
