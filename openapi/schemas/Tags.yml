@@ -1,0 +1,17 @@
+Tags:
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+  
+  TagList:
+    type: array
+    items:
+      $ref: '#/Tags/Tag'
+  
+  PostTag:
+    type: string
+    minLength: 1

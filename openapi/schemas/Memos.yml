@@ -1,0 +1,42 @@
+Memos:
+  Memo:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      content:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+  
+  PostToAI:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+  
+  SuggestedFromAI:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      is_user_defined:
+        type: boolean
