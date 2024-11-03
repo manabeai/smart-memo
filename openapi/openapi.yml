@@ -73,7 +73,7 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: './schemas/Memos.yml#/Memos/Memo'
+              $ref: './schemas/Memos.yml#/Memos/CreateMemo'
       responses:
         '201':
           description: メモ作成に成功
@@ -125,7 +125,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './schemas/Memos.yml#/Memos/Memo'
+              $ref: './schemas/Memos.yml#/Memos/UpdateMemo'
       responses:
         '200':
           description: メモの変更に成功
