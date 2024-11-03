@@ -15,33 +15,6 @@ components:
           scopes:
             access: メモの読み取りおよび書き込み権限
 
-  schemas:
-    Memo:
-      type: object
-      properties:
-        id:
-          type: integer
-        content:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-
-    Tag: 
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-
 security:
   - OAuth2:
       - access
@@ -245,14 +218,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tag'
+              $ref: './schemas/Tags.yml#/Tags/Tag'
       responses:
         '200':
           description: タグの更新に成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tag'
+                $ref: './schemas/Tags.yml#/Tags/Tag'
     delete:
       summary: タグを削除
       operationId: deleteTag
