@@ -1,5 +1,11 @@
 FROM node:18
 WORKDIR /app
-# COPY frontend/ /app
+ARG USERNAME=USER
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupmod --gid $USER_GID $USERNAME \
+    && usermod --uid $USER_UID --gid $USER_GID $USERNAME \
+    && chown -R $USER_UID:$USER_GID /app
+
 RUN yarn
-# RUN yarn create next-app . --ts
