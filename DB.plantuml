@@ -1,0 +1,60 @@
+@startuml SmartMemo
+title SmartMemo
+
+entity "Users" as users {
+  + id: integer <<PK>>
+  --
+  * email: string
+  * password: string
+  * provider: string
+  * uid: string
+  * access_token: string
+  * access_secret: string
+  * created_at: datetime
+  * updated_at: datetime
+  --
+  unique: [email, uid]
+}
+
+entity "Memos" as memos {
+  + id: integer <<PK>>
+  --
+  # user_id: integer <<FK>>
+  * title: string
+  * content: text
+  * created_at: datetime
+  * updated_at: datetime
+}
+
+entity "Tags" as tags {
+  + id: integer <<PK>>
+  --
+  # user_id: integer <<FK>>
+  * name: string
+  * created_at: datetime
+  * updated_at: datetime
+}
+
+entity "Default_Tags" as default_tags {
+  + id: integer <<PK>>
+  --
+  * name: string
+  * created_at: datetime
+  * updated_at: datetime
+}
+
+entity "Memo_Tags" as memo_tags {
+  + id: integer <<PK>>
+  --
+  # memo_id: integer <<FK>>
+  # tag_id: integer <<FK>>
+  * created_at: datetime
+  * updated_at: datetime
+}
+
+users ||--o{ memos
+users ||--o{ tags
+memos ||--o{ memo_tags
+tags ||--o{ memo_tags
+
+@enduml
