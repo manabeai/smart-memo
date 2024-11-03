@@ -225,7 +225,7 @@ paths:
                 $ref: './schemas/Tags.yml#/Tags/Tag'
                 
   /tags/{id}:
-    put:
+    patch:
       summary: タグを更新
       operationId: updateTag
       tags:
