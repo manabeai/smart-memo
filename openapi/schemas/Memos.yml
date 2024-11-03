@@ -18,6 +18,32 @@ Memos:
       updated_at:
         type: string
         format: date-time
+
+  CreateMemo:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+
+  UpdateMemo:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      content:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
   
   PostToAI:
     type: object
