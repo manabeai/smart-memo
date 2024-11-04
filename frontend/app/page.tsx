@@ -1,9 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import api from '@/utils/index.ts'; // axiosインスタンスをインポート
 
 export default async function Posts() {
-  let data = await fetch('http://rails:3000/posts')
-  let posts = await data.json()
+  // fetchの代わりにAxiosでデータを取得
+  let response = await api.get('/posts'); // baseURLが適用されるのでURLが短くなる
+  let posts = response.data;
 
   return (
     <ScrollArea className="h-[400px] w-full rounded-md border p-4">
@@ -20,5 +22,5 @@ export default async function Posts() {
         ))}
       </ul>
     </ScrollArea>
-  )
+  );
 }
