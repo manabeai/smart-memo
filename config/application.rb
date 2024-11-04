@@ -34,7 +34,7 @@ module App
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://nextjs:4000' # Next.jsのサーバーURLを指定
+        origins 'http://localhost:4000' # Next.jsのサーバーURLを指定
         resource '*',
           headers: :any,
           methods: [:get, :post, :put, :patch, :delete, :options, :head],
