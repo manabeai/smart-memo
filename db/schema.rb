@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_03_034643) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_04_071735) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "default_tags", force: :cascade do |t|
@@ -62,7 +63,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_034643) do
     t.string "access_secret"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
   add_foreign_key "memos", "users"
