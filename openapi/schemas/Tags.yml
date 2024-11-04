@@ -4,8 +4,10 @@ Tags:
     properties:
       id:
         type: integer
+        example: 1234
       name:
         type: string
+        example: "スポーツ"
   
   TagList:
     type: array
@@ -15,3 +17,21 @@ Tags:
   PostTag:
     type: string
     minLength: 1
+    example: "健康"
+
+  PostedTag:
+    type: string
+    minLength: 1
+    example:
+        id: 12
+        name: "健康"
+
+  UpdateTag:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1234
+      name:
+        type: string
+        example: "卓球"
