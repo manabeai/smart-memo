@@ -39,3 +39,4 @@ npm install -g @stoplight/prism-cli
 ```bash
 prism mock openapi/openapi.yml
 ```
+![alt text](othor/prism.png)
