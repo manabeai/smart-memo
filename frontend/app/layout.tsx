@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-// import { TextEditor } from "@/components/text-editor"
+import { TextEditor } from "@/components/text-editor"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,7 +42,9 @@ export default function RootLayout({
             TextEditor -> テキストエリアのコンポーネント(の予定)
             これを含んで実行したらエラーが発生。
             <TextEditor />
-            */}
+            */
+            <TextEditor />
+            }
             { children }
           </main>
         </SidebarProvider>
