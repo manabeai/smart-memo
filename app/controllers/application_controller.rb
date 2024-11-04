@@ -1,5 +1,3 @@
-require_dependency Rails.root.join('app/models/user').to_s
-
 class ApplicationController < ActionController::API
   before_action :log_request_details, :set_cookie_and_guest_user_if_absent
 
@@ -17,22 +15,22 @@ class ApplicationController < ActionController::API
 
   def set_cookie_and_guest_user_if_absent
     # リクエストからクッキーを取得
-    user_session = request.cookies['user_session']
+    user_session = request.cookies["user_session"]
 
     # クッキーが空か、またはデータベースに該当するユーザーが存在しない場合一時ユーザー作成
     if user_session.blank? || User.find_by(uuid: user_session).nil?
-      
+
       # 仮ユーザーを作成、UUIDをセッショントークンとして使用
       new_uuid = SecureRandom.uuid
       guest_user = User.create(guest: true, uuid: new_uuid)
 
       # 新しいクッキーを設定
-      response.set_cookie('user_session', {
+      response.set_cookie("user_session", {
         value: new_uuid,
         expires: 100.hours.from_now,
         domain: "localhost",
         secure: Rails.env.production?,
-        same_site: :None,
+        same_site: :None
       })
 
       # Rails.logger.info.response
