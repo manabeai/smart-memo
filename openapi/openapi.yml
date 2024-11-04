@@ -3,6 +3,9 @@ info:
   title: SmartMemo API
   version: '1.0.0'
   description: SmartMemoのAPI仕様書
+servers:
+  - url: http://127.0.0.1:4010
+  - url: http://rails:3000
 
 # components:
 #   securitySchemes:
@@ -26,9 +29,9 @@ paths:
       operationId: getMyMemos
       tags:
         - memos
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       responses:
         '200':
           description: 自分のメモの一覧取得に成功
@@ -56,9 +59,9 @@ paths:
       operationId: suggestTagsFromAI
       tags:
         - memos
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       requestBody:
         required: true
         content:
@@ -128,9 +131,9 @@ paths:
           required: true
           schema:
             type: integer
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       responses:
         '200':
           description: メモの取得に成功
@@ -152,9 +155,9 @@ paths:
           required: true
           schema:
             type: integer
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       requestBody:
         required: true
         content:
@@ -182,9 +185,9 @@ paths:
           required: true
           schema:
             type: integer
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       responses:
         '204':
           description: メモの削除に成功
@@ -197,9 +200,9 @@ paths:
       operationId: getTags
       tags:
         - tags
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       responses:
         '200':
           description: タグの一覧取得に成功
@@ -219,9 +222,9 @@ paths:
       operationId: createTag
       tags:
         - tags
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       requestBody:
         description: 新しいタグのデータ
         required: true
@@ -243,9 +246,9 @@ paths:
       operationId: updateTag
       tags:
         - tags
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       parameters:
         - name: id
           in: path
@@ -271,9 +274,9 @@ paths:
       operationId: deleteTag
       tags:
         - tags
-      security:
-        - OAuth2:
-            - access
+#      security:
+#        - OAuth2:
+#            - access
       parameters:
         - name: id
           in: path
