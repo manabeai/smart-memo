@@ -20,13 +20,14 @@ class ApplicationController < ActionController::API
     user_session = request.cookies['user_session']
 
     # クッキーが空か、またはデータベースに該当するユーザーが存在しない場合
-    if user_session.blank? || User.find_by(id: user_session).nil?
+    if user_session.blank? || User.find_by(uuid: user_session).nil?
       # 仮ユーザーを作成
+      uuid = 
       guest_user = User.create(guest: true)
 
       # 新しいクッキーを設定
       response.set_cookie('user_session', {
-        value: guest_user.id,  # 仮ユーザーIDをクッキーに保存
+        value: uuid
         expires: 1.hour.from_now,  # 有効期限を設定
         secure: Rails.env.production?,  # 本番環境ではsecure属性を有効に
         httponly: true,  # JavaScriptからのアクセスを防ぐ
