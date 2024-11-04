@@ -3,7 +3,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import api from '@/utils/index.ts'; // axiosインスタンスをインポート
 
 export default async function Posts() {
-  // fetchの代わりにAxiosでデータを取得
   let response = await api.get('/posts'); // baseURLが適用されるのでURLが短くなる
   let posts = response.data;
 

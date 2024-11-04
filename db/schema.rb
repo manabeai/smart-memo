@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_034643) do
     t.string "uid"
     t.string "access_token"
     t.string "access_secret"
+    t.boolean "guest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

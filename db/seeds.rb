@@ -39,10 +39,10 @@ DefaultTag.destroy_all
 
 # ユーザーを作成
 users = User.create!([
-  { email: 'user1@example.com', password: 'password' },
-  { email: 'user2@example.com', password: 'password' },
-  { email: 'user3@example.com', password: 'password' },
-  { email: 'user4@example.com', password: 'password' }
+  { email: 'user1@example.com', password: 'password', guest: true },
+  { email: 'user2@example.com', password: 'password', guest: true },
+  { email: 'user3@example.com', password: 'password', guest: false },
+  { email: 'user4@example.com', password: 'password', guest: false }
 ])
 
 DefaultTag.create([
