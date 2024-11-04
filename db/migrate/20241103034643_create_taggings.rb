@@ -1,4 +1,4 @@
-class CreateTagging < ActiveRecord::Migration[7.2]
+class CreateTaggings < ActiveRecord::Migration[7.2]
   def change
     create_table :taggings do |t|
       t.references :memo, null: false, foreign_key: true
