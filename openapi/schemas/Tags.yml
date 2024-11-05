@@ -20,7 +20,9 @@ Tags:
     example: "健康"
 
   PostedTag:
-    type: string
+    type: object
+    properties:
+      $ref: '#/Tags/Tag'
     minLength: 1
     example:
         id: 12
