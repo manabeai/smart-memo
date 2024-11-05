@@ -45,6 +45,13 @@ class MemosController < ApplicationController
   end
 
   def create
+    tags = Tag.all.limit(3).map { |tag| { name: tag.name, is_user_defined: tag.id } }
+    tags << { name: DefaultTag.first.name, is_user_defined: nil }
+    render json: {
+      title: "sample_title",
+      content: "sample_content",
+      tags: tags
+    }
   end
 
   def update
