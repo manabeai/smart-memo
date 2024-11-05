@@ -6,6 +6,7 @@ export const api = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     withCredentials: true,
     timeout: 1000,
+
     headers: {
         'Content-Type': 'application/json',
     },
@@ -28,6 +29,7 @@ export const api = Axios.create({
 //         return Promise.reject(error);
 //     }
 // );
+
 
 api.interceptors.response.use(
     (response) => {
