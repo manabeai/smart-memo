@@ -52,6 +52,7 @@ jobs:
       - name: Set up PostgreSQL
         env:
           RAILS_ENV: test
+          DATABASE_URL: postgresql://postgres@localhost:5432/postgres?encoding=utf8&pool=5&timeout=5000
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
@@ -62,5 +63,6 @@ jobs:
       - name: Run RSpec
         env:
           RAILS_ENV: test
+          DATABASE_URL: postgresql://postgres@localhost:5432/postgres?encoding=utf8&pool=5&timeout=5000
         run: |
           bundle exec rspec
