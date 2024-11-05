@@ -3,10 +3,9 @@ import Axios from 'axios';
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const api = Axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: 'http://localhost:3000',
     withCredentials: true,
     timeout: 1000,
-
     headers: {
         'Content-Type': 'application/json',
     },
