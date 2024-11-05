@@ -1,0 +1,2 @@
+class DefaultTag < ApplicationRecord
+end
