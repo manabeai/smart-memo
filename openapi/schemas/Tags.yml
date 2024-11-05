@@ -7,7 +7,13 @@ Tags:
         example: 1234
       name:
         type: string
-        example: "スポーツ"
+        example: "大阪万博"
+  CreateTag:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "大阪万博"
   
   TagList:
     type: array
@@ -15,9 +21,13 @@ Tags:
       $ref: '#/Tags/Tag'
   
   PostTag:
-    type: string
+    type: object
+    properties:
+      $ref: '#/Tags/Tag'
     minLength: 1
-    example: "健康"
+    example:
+      - id: 12
+        name: "健康"
 
   PostedTag:
     type: object
@@ -25,7 +35,7 @@ Tags:
       $ref: '#/Tags/Tag'
     minLength: 1
     example:
-        id: 12
+      - id: 12
         name: "健康"
 
   UpdateTag:
