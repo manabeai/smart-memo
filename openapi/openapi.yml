@@ -81,9 +81,9 @@ paths:
                   content: "ご結婚おめでとうございます。お二人の門出を心よりお祝い申し上げます。"
                   tags:
                     - name: "アイデア"
-                      is_user_defined: false
+                      is_user_defined: null
                     - name: "イベント"
-                      is_user_defined: true
+                      is_user_defined: 4
   /memos/create:
     post:
       summary: メモを作成
@@ -97,6 +97,7 @@ paths:
             schema:
               type: object
               $ref: './schemas/Memos.yml#/Memos/CreateMemo'
+
       responses:
         '201':
           description: メモ作成に成功
@@ -117,8 +118,19 @@ paths:
                   tags:
                     type: array
                     items:
-                      type: string
-                    example: ["仕事", "タスク", プログラミング]
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "アイデア"
+                        is_user_defined:
+                          type: integer
+                          example: null
+                    example:
+                      - name: "アイデア"
+                        is_user_defined: 1002
+                      - name: "イベント"
+                        is_user_defined: 4
   /memos/{id}:
     get:
       summary: 特定のメモを取得
@@ -231,14 +243,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './schemas/Tags.yml#/Tags/PostTag'
+              $ref: './schemas/Tags.yml#/Tags/CreateTag'
       responses:
         '201':
           description: タグの作成に成功
           content:
             application/json:
               schema:
-                $ref: './schemas/Tags.yml#/Tags/PostedTag'
+                $ref: './schemas/Tags.yml#/Tags/Tag'
                 
   /tags/{id}:
     patch:

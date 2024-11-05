@@ -21,7 +21,7 @@ Post.create!(
 # db/seeds.rb
 
 # 既存のデータを削除（開発環境のため）
-# User.destroy_all
+User.destroy_all
 Tag.destroy_all
 Memo.destroy_all
 Tagging.destroy_all
@@ -58,7 +58,7 @@ tags = Tag.create([
 # メモを作成
 memos = []
 20.times do |i|
-  user = users.sample # ランダムにユーザーを選択
+  user = users[i % 4]
   memo = Memo.create!(title: "メモタイトル #{i + 1}", content: "メモの内容 #{i + 1}", user_id: user.id) # user_id を直接設定
   memos << memo
 end
@@ -66,13 +66,15 @@ end
 # # タグ付けを作成（最大30ペアになるように）
 taggings = Set.new  # 重複を避けるためにSetを使用
 
-while taggings.size < 30 do
-  memo = users.sample.memos.sample
-  tag = users.sample.tags.sample
+i = 0
+while i < 30 do
+  memo = users[i % 4].memos[i % 4]
+  tag = users[i % 4].tags[i % 3]
 
   # ユニークなペアであることを確認
   pair = [ memo.id, tag.id ]
   taggings.add(pair)
+  i +=1
 end
 
 # # 実際のデータベースにペアを挿入
@@ -81,4 +83,3 @@ taggings.each do |memo_id, tag_id|
 end
 
 puts "Seed data created successfully!"
->>>>>>> main
