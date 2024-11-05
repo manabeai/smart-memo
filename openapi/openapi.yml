@@ -1,4 +1,3 @@
-
 openapi: 3.0.0
 info:
   title: SmartMemo API
@@ -287,4 +286,3 @@ paths:
       responses:
         '204':
           description: タグの削除に成功
->>>>>>> main
