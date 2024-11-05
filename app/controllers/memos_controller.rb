@@ -27,9 +27,9 @@ class MemosController < ApplicationController
   end
 
   def index
-    # Your code here
+    @memos = User.find(@default).memos.includes(:tags)
 
-    render json: { "message" => "yes, it worked" }
+    render json: @memos.as_json(include: { tags: { only: [:id, :name] } })
   end
 
   def create

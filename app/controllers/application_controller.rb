@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   before_action :log_request_details, :set_cookie_and_guest_user_if_absent
 
+  def initialize
+    @default = 1
+  end
+
   private
 
   def log_request_details
