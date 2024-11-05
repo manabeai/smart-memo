@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
   def initialize
-    @default = 3
+    @default = 1
   end
 end

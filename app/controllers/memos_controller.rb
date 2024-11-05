@@ -13,7 +13,7 @@ class MemosController < ApplicationController
     @memo = Memo.create(title: params[:title], content: params[:content], user_id: @default)
 
     params[:tags].each do |tag|
-      if tag[:is_user_defined]
+      unless tag[:is_user_defined].nil?
         Tagging.create(memo_id: @memo.id, tag_id: tag[:is_user_defined])
       else
         @tag = Tag.create(name: tag[:name], user_id: @default)
@@ -54,6 +54,12 @@ class MemosController < ApplicationController
     @taggings.each do |tagging|
       unless @updated_tag_ids.include?(tagging.tag_id)
         tagging.destroy
+      end
+    end
+
+    params[:tags].each do |tag|
+      if Tagging.find_by(memo_id: params[:id], tag_id: tag[:id]).nil?
+        Tagging.create(memo_id: params[:id], tag_id: tag[:id])
       end
     end
 

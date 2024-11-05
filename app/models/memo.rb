@@ -1,4 +1,5 @@
 class Memo < ApplicationRecord
-  has_many :taggings
-  has_many :tags, through: :taggings
+  belongs_to :user
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings, dependent: :destroy
 end
