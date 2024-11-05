@@ -1,0 +1,300 @@
+openapi: 3.0.0
+info:
+  title: SmartMemo API
+  version: '1.0.0'
+  description: SmartMemoのAPI仕様書
+servers:
+  - url: http://127.0.0.1:4010
+  - url: http://rails:3000
+
+# components:
+#   securitySchemes:
+#     OAuth2:
+#       type: oauth2
+#       flows:
+#         authorizationCode:
+#           authorizationUrl: http://localhost:3000/users/auth/google_oauth2
+#           tokenUrl: https://example.com/oauth/token
+#           scopes:
+#             access: メモの読み取りおよび書き込み権限
+
+# security:
+#   - OAuth2:
+#       - access
+
+paths:
+  /memos:
+    get:
+      summary: 自分のメモの一覧を取得
+      operationId: getMyMemos
+      tags:
+        - memos
+#      security:
+#        - OAuth2:
+#            - access
+      responses:
+        '200':
+          description: 自分のメモの一覧取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/Memos.yml#/Memos/Memo'
+                example:
+                  -   id: 1
+                      title: 今日の用事
+                      content: 今日は買い物に行く
+                      tags: [買い物, 用事]
+                      created_at: 2021-01-01T00:00:00Z
+                      updated_at: 2021-01-01T00:00:00Z
+                  -   id: 2
+                      title: 読みたい本
+                      content: 夏目漱石、坊っちゃん
+                      tags: [読書, 趣味, 夏目漱石]
+                      created_at: 2021-01-01T12:00:00Z
+                      updated_at: 2021-01-12T13:00:00Z
+    post:
+      summary: 自分の書いた内容からタグのおすすめをAIから取得
+      operationId: suggestTagsFromAI
+      tags:
+        - memos
+#      security:
+#        - OAuth2:
+#            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/Memos.yml#/Memos/PostToAI'
+      responses:
+        '200':
+          description: タグのおすすめの取得に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: './schemas/Memos.yml#/Memos/SuggestedFromAI'
+                example:
+                  title: "結婚式の祝辞"
+                  content: "ご結婚おめでとうございます。お二人の門出を心よりお祝い申し上げます。"
+                  tags:
+                    - name: "アイデア"
+                      is_user_defined: null
+                    - name: "イベント"
+                      is_user_defined: 4
+  /memos/create:
+    post:
+      summary: メモを作成
+      operationId: createMemo
+      tags:
+        - memos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: './schemas/Memos.yml#/Memos/CreateMemo'
+
+      responses:
+        '201':
+          description: メモ作成に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 10
+                  title:
+                    type: string
+                    example: "新しい案件"
+                  content:
+                    type: string
+                    example: "ハッカソンで開発作業"
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "アイデア"
+                        is_user_defined:
+                          type: integer
+                          example: null
+                    example:
+                      - name: "アイデア"
+                        is_user_defined: 1002
+                      - name: "イベント"
+                        is_user_defined: 4
+  /memos/{id}:
+    get:
+      summary: 特定のメモを取得
+      operationId: getMemoById
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+#      security:
+#        - OAuth2:
+#            - access
+      responses:
+        '200':
+          description: メモの取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/Memos.yml#/Memos/Memo'
+        '404':
+          description: メモが見つからない
+
+    patch:
+      summary: メモを更新
+      operationId: updateMemo
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+#      security:
+#        - OAuth2:
+#            - access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/Memos.yml#/Memos/UpdateMemo'
+      responses:
+        '200':
+          description: メモの変更に成功
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/Memos.yml#/Memos/UpdateMemo'
+        '404':
+          description: メモが見つからない
+
+    delete:
+      summary: メモを削除
+      operationId: deleteMemo
+      tags:
+        - memos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+#      security:
+#        - OAuth2:
+#            - access
+      responses:
+        '204':
+          description: メモの削除に成功
+        '404':
+          description: メモが見つからない
+
+  /tags:
+    get:
+      summary: タグの一覧を取得
+      operationId: getTags
+      tags:
+        - tags
+#      security:
+#        - OAuth2:
+#            - access
+      responses:
+        '200':
+          description: タグの一覧取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/Tags.yml#/Tags/Tag'
+                example:
+                  - id: 1
+                    name: 家電
+                  - id: 2
+                    name: 人生
+    post:
+      summary: 新しいタグを作成
+      operationId: createTag
+      tags:
+        - tags
+#      security:
+#        - OAuth2:
+#            - access
+      requestBody:
+        description: 新しいタグのデータ
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/Tags.yml#/Tags/CreateTag'
+      responses:
+        '201':
+          description: タグの作成に成功
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/Tags.yml#/Tags/Tag'
+                
+  /tags/{id}:
+    patch:
+      summary: タグを更新
+      operationId: updateTag
+      tags:
+        - tags
+#      security:
+#        - OAuth2:
+#            - access
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 更新するタグのデータ
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/Tags.yml#/Tags/UpdateTag'
+      responses:
+        '200':
+          description: タグの更新に成功
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/Tags.yml#/Tags/UpdateTag'
+    delete:
+      summary: タグを削除
+      operationId: deleteTag
+      tags:
+        - tags
+#      security:
+#        - OAuth2:
+#            - access
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: タグの削除に成功

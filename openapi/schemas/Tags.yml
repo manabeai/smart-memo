@@ -1,0 +1,49 @@
+Tags:
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1234
+      name:
+        type: string
+        example: "大阪万博"
+  CreateTag:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "大阪万博"
+  
+  TagList:
+    type: array
+    items:
+      $ref: '#/Tags/Tag'
+  
+  PostTag:
+    type: object
+    properties:
+      $ref: '#/Tags/Tag'
+    minLength: 1
+    example:
+      - id: 12
+        name: "健康"
+
+  PostedTag:
+    type: object
+    properties:
+      $ref: '#/Tags/Tag'
+    minLength: 1
+    example:
+      - id: 12
+        name: "健康"
+
+  UpdateTag:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1234
+      name:
+        type: string
+        example: "卓球"

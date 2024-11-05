@@ -1,0 +1,105 @@
+Memos:
+  Memo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      title:
+        type: string
+        example: "今日の用事"
+      content:
+        type: string
+        example: "今日は買い物に行く"
+      tags:
+        type: array
+        items:
+          type: string
+        example: ["買い物", "用事"]
+      created_at:
+        type: string
+        format: date-time
+        example: "2021-01-01T00:00:00Z"
+      updated_at:
+        type: string
+        format: date-time
+        example: "2021-01-01T00:00:00Z"
+  CreateMemo:
+    type: object
+    properties:
+      title:
+        type: string
+        example: "新しい案件"
+      content:
+        type: string
+        example: "ハッカソンで開発作業"
+      tags:
+        type: array
+        items:
+          - type: string
+            example: "仕事"
+          - type: integer
+            example: 2
+        example:
+          - name: "アイデア"
+            is_user_defined: null
+          - name: "イベント"
+            is_user_defined: 4
+  UpdateMemo:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 2
+      title:
+        type: string
+        example: "更新されたメモタイトル"
+      content:
+        type: string
+        example: "メモの内容が変更されました"
+
+      tags:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "アイデア"
+            id:
+              type: integer
+              example: null
+        example:
+          - name: "アイデア"
+            id: null
+          - name: "イベント"
+            id: 4
+  PostToAI:
+    type: object
+    properties:
+      title:
+        type: string
+        example: "結婚式の祝辞"
+      content:
+        type: string
+        example: "ご結婚おめでとうございます。お二人の門出を心よりお祝い申し上げます。"
+  SuggestedFromAI:
+    type: object
+    properties:
+      title:
+        type: string
+        example: "AIの提案タイトル"
+      content:
+        type: string
+        example: "AIが生成した内容です"
+      tags:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "アイデア"
+            is_user_defined:
+              type: integer
+              example: null
