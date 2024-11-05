@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+import { TextEditor } from "@/components/text-editor"
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -28,7 +33,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+
+        <SidebarProvider>
+          <AppSidebar />
+          <main>
+            <SidebarTrigger />
+            {/*
+            TextEditor -> テキストエリアのコンポーネント(の予定)
+            これを含んで実行したらエラーが発生。
+            <TextEditor />
+            */
+            <TextEditor />
+            }
+            { children }
+          </main>
+        </SidebarProvider>
+        
       </body>
     </html>
   );

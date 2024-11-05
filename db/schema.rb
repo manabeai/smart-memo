@@ -73,3 +73,4 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_071735) do
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "users"
 end
+>>>>>>> main
