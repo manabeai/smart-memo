@@ -42,4 +42,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "rspec"
   # gem "solargraph"
+  gem "factory_bot_rails"
+  gem "faker"
 end

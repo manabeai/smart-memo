@@ -28,6 +28,7 @@ export const api = Axios.create({
 //         return Promise.reject(error);
 //     }
 // );
+
 api.interceptors.response.use(
     (response) => {
         // レスポンスのヘッダーにクッキーが含まれているか確認
