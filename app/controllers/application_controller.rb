@@ -30,7 +30,7 @@ class ApplicationController < ActionController::API
         expires: 100.hours.from_now,
         domain: "localhost",
         secure: Rails.env.production?,
-        same_site: :None
+        same_site: :Lax # XXX: 開発中はNoneにするとエラーが発生。(NoneはSecureとしか使えず、SecureはTLSでのみ有効なため)
       })
 
       # Rails.logger.info.response
