@@ -55,6 +55,7 @@ class MemosController < ApplicationController
   end
 
   def update
+    @memo = Memo.find(params[:id])
     @updated_tag_ids = Set.new(params[:tags].map { |tag| tag[:id] }.compact)
     @taggings = Memo.find(params[:id]).taggings
 
@@ -65,12 +66,12 @@ class MemosController < ApplicationController
     end
 
     params[:tags].each do |tag|
-      if Tagging.find_by(memo_id: params[:id], tag_id: tag[:id]).nil?
-        Tagging.create(memo_id: params[:id], tag_id: tag[:id])
+      if Tagging.find_by(memo_id: @memo.id, tag_id: tag[:id]).nil?
+        Tagging.create(memo_id: @memo.id, tag_id: tag[:id])
       end
     end
 
-    @memo = Memo.find(params[:id]).update(title: params[:title], content: params[:content])
+    @memo.update(title: params[:title], content: params[:content])
     render json: @memo.as_json(include: { tags: { only: [ :id, :name ] } })
   end
 end
