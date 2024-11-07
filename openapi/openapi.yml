@@ -45,13 +45,37 @@ paths:
                   -   id: 1
                       title: 今日の用事
                       content: 今日は買い物に行く
-                      tags: [買い物, 用事]
+                      tags: 
+                        [
+                          {
+                            id: 1,
+                            name: "買い物"
+                          },
+                          {
+                            id: 2,
+                            name: "家事"
+                          }
+                        ]
                       created_at: 2021-01-01T00:00:00Z
                       updated_at: 2021-01-01T00:00:00Z
                   -   id: 2
                       title: 読みたい本
                       content: 夏目漱石、坊っちゃん
-                      tags: [読書, 趣味, 夏目漱石]
+                      tags:
+                        [
+                          {
+                            id: 3,
+                            name: "読書"
+                          },
+                          {
+                            id: 4,
+                            name: "文学"
+                          },
+                          {
+                            id: 5,
+                            name: "日本文学"
+                          }
+                        ]
                       created_at: 2021-01-01T12:00:00Z
                       updated_at: 2021-01-12T13:00:00Z
     post:
@@ -153,6 +177,23 @@ paths:
             application/json:
               schema:
                 $ref: './schemas/Memos.yml#/Memos/Memo'
+                example:
+                  id: 1
+                  title: 今日の用事
+                  content: 今日は買い物に行く
+                  tags: 
+                    [
+                      {
+                        id: 1,
+                        name: "買い物"
+                      },
+                      {
+                        id: 2,
+                        name: "家事"
+                      }
+                    ]
+                  created_at: 2021-01-01T00:00:00Z
+                  updated_at: 2021-01-01T00:00:00Z
         '404':
           description: メモが見つからない
 

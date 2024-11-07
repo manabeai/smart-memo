@@ -14,8 +14,14 @@ Memos:
       tags:
         type: array
         items:
-          type: string
-        example: ["買い物", "用事"]
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "買い物"
       created_at:
         type: string
         format: date-time
