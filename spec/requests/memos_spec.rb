@@ -54,6 +54,32 @@ RSpec.describe "Memos", type: :request do
     end
   end
 
+  describe "GET /memos/:id" do
+    it "returns a successful response" do
+      create_list(:memo, 5, user: user)
+      create_list(:tag, 5, user: user)
+      Tagging.create(memo: sample_memo, tag: Tag.first)
+      Tagging.create(memo: sample_memo, tag: Tag.second)
+
+      get "/memos/#{Memo.first.id}"
+      expect(response).to have_http_status(:success)
+    end
+
+    it "returns the correct memo" do
+      create_list(:memo, 5, user: user)
+      create_list(:tag, 5, user: user)
+      Tagging.create(memo: sample_memo, tag: Tag.first)
+      Tagging.create(memo: sample_memo, tag: Tag.second)
+
+      get "/memos/#{Memo.first.id}"
+      expect(JSON.parse(response.body)["title"]).to eq(Memo.first.title)
+      expect(JSON.parse(response.body)["content"]).to eq(Memo.first.content)
+      expect(JSON.parse(response.body)["tags"]).to be_an_instance_of(Array)
+      expect(JSON.parse(response.body)["tags"]).to [ Tag.first.name, Tag.second.name ]
+      expect(JSON.parse(response.body)["tags"].size).to eq(2)
+    end
+  end
+
   describe "PATCH /memos/:id" do
     it "returns a successful response" do
       create_list(:memo, 5, user: user)
