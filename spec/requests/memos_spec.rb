@@ -58,24 +58,30 @@ RSpec.describe "Memos", type: :request do
     it "returns a successful response" do
       create_list(:memo, 5, user: user)
       create_list(:tag, 5, user: user)
+      sample_memo = Memo.all.sample
       Tagging.create(memo: sample_memo, tag: Tag.first)
       Tagging.create(memo: sample_memo, tag: Tag.second)
 
-      get "/memos/#{Memo.first.id}"
+      get "/memos/#{sample_memo.id}"
       expect(response).to have_http_status(:success)
     end
 
     it "returns the correct memo" do
       create_list(:memo, 5, user: user)
       create_list(:tag, 5, user: user)
+      sample_memo = Memo.all.sample
       Tagging.create(memo: sample_memo, tag: Tag.first)
       Tagging.create(memo: sample_memo, tag: Tag.second)
 
-      get "/memos/#{Memo.first.id}"
-      expect(JSON.parse(response.body)["title"]).to eq(Memo.first.title)
-      expect(JSON.parse(response.body)["content"]).to eq(Memo.first.content)
+      get "/memos/#{sample_memo.id}"
+      expect(JSON.parse(response.body)["title"]).to eq(sample_memo.title)
+      expect(JSON.parse(response.body)["content"]).to eq(sample_memo.content)
       expect(JSON.parse(response.body)["tags"]).to be_an_instance_of(Array)
-      expect(JSON.parse(response.body)["tags"]).to [ Tag.first.name, Tag.second.name ]
+      # debugger
+      expect(JSON.parse(response.body)["tags"]).to eq([
+        { "id" => Tag.first.id, "name" => Tag.first.name },
+        { "id" => Tag.second.id, "name" => Tag.second.name }
+      ])
       expect(JSON.parse(response.body)["tags"].size).to eq(2)
     end
   end
