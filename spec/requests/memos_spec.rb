@@ -13,7 +13,6 @@ RSpec.describe "Memos", type: :request do
     it "returns the correct number of memos" do
       create_list(:memo, 3, user: user)
       get "/memos"
-
       expect(JSON.parse(response.body).size).to eq(3)
     end
   end
