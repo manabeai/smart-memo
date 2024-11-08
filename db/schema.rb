@@ -61,7 +61,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_071735) do
     t.string "uid"
     t.string "access_token"
     t.string "access_secret"
-    t.boolean "guest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
