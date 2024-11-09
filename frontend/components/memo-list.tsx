@@ -36,27 +36,31 @@ export default function MemoList() {
   }, []); // 空の依存配列で、初回レンダリング時のみ実行
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">メモ一覧</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {memos.map((memo) => (
-          <Card key={memo.id} className="hover:shadow-lg transition-shadow duration-300">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">{memo.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 mb-4">{memo.content}</p>
-              <div className="text-xs text-gray-500">
-                <p>作成日時: {formatDate(memo.created_at)}</p>
-                <p>更新日時: {formatDate(memo.updated_at)}</p>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <p className="text-sm text-gray-500">ID: {memo.id}</p>
-            </CardFooter>
-          </Card>
-        ))}
+    (!memos.length) ? 
+      <div>
+        <p className='text-md text-gray-500'>No memos... Make a new memo!!</p>
+      </div> :
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">View memos</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {memos.map((memo) => (
+            <Card key={memo.id} className="hover:shadow-lg transition-shadow duration-300">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">{memo.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600 mb-4">{memo.content}</p>
+                <div className="text-xs text-gray-500">
+                  <p>作成日時: {formatDate(memo.created_at)}</p>
+                  <p>更新日時: {formatDate(memo.updated_at)}</p>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <p className="text-sm text-gray-500">ID: {memo.id}</p>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
-    </div>
   );
 }

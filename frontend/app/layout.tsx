@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import { TextEditor } from "@/components/text-editor"
+import { MemoMaker } from "@/components/memo-maker"
 import MemoList from "@/components/memo-list";
 
 const geistSans = localFont({
@@ -32,16 +32,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="antialiased w-[100vw] h-[100vh]"
       >
 
         <SidebarProvider>
           <AppSidebar />
-          <main>
+          <main className="h-[100vh] w-[100vw] flex flex-col gap-y-10">
             <SidebarTrigger />
-            <TextEditor />
-            {children}
-            <MemoList/>
+            <div className="w-[80%] h-[80%] flex flex-col mx-auto gap-y-5">
+              <MemoMaker />
+              <MemoList />
+              { children }
+            </div>
           </main>
         </SidebarProvider>
         
