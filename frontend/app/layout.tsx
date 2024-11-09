@@ -5,6 +5,8 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import { api, GOOGLE_CLIENT_ID } from '@/utils/index';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -51,5 +54,6 @@ export default function RootLayout({
         
       </body>
     </html>
+    </GoogleOAuthProvider>
   );
 }

@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
@@ -32,12 +33,16 @@ module App
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: "_app_session"
 
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins "http://localhost:4000" # Next.jsのサーバーURLを指定
+        # origins "http://localhost:4000", "http://nextjs:4000"
+        origins "http://localhost:4000"
         resource "*",
-          headers: :any,
+          # headers: ['Origin', 'access-control-request-method', 'Access-Control-Request-Headers', 'X-Requested-With', 'Content-Type', 'Authorization', 'Accept'],
+          headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Authorization', 'Accept'],
           methods: [ :get, :post, :put, :patch, :delete, :options, :head ],
+          expose: ['Access-Control-Allow-Origin', 'access-control-request', 'access-control-request'],
           credentials: true
       end
     end

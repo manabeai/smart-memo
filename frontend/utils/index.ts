@@ -1,34 +1,27 @@
 import Axios from 'axios';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+export const GOOGLE_CLIENT_SECRERT = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET;
 
 export const api = Axios.create({
     baseURL: 'http://localhost:3000',
     withCredentials: true,
-    timeout: 1000,
+    // timeout: 10000000,
     headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
+        // 'Access-Control-Allow-Origin': 'http://localhost:3000'
     },
 });
 
-// api.interceptors.request.use(
-//     (config) => {
-//         // 認証トークンを取得（ローカルストレージやセッションストレージから）
-//         const token = localStorage.getItem('authToken'); // 例としてローカルストレージから取得
-
-//         if (token) {
-//             // ヘッダーにトークンを追加
-//             config.headers['Authorization'] = `Bearer ${token}`;
-//         }
-
-//         return config; // 必ずconfigを返す
-//     },
-//     (error) => {
-//         // エラーがあった場合はエラーを返す
-//         return Promise.reject(error);
-//     }
-// );
-
+api.interceptors.request.use(config => {
+    if (localStorage.hasOwnProperty('SmartMemoJwtToken')) {
+        const token = localStorage.getItem('SmartMemoJwtToken');
+        config.withCredentials = true;
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+});
 
 api.interceptors.response.use(
     (response) => {

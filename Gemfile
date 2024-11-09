@@ -30,6 +30,11 @@ gem "bootsnap", require: false
 gem "rack-cors"
 
 gem "dotenv-rails"
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem "http"
+gem "json"
+gem "jwt"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -45,6 +50,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
-  # Gemfile
+  gem "pry-rails"
   gem "database_cleaner-active_record"
 end

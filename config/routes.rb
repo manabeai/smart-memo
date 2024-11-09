@@ -23,7 +23,11 @@ Rails.application.routes.draw do
   add_openapi_route "DELETE", "/tags/{id}", controller_name: "tags", action_name: "destroy"
   add_openapi_route "GET", "/tags", controller_name: "tags", action_name: "index"
   add_openapi_route "PATCH", "/tags/{id}", controller_name: "tags", action_name: "update"
+  add_openapi_route "POST", '/auth/google_oauth2', controller_name: "sessions", action_name: "google_oauth2"
   resources :posts
+
+  # プリフライトリクエストを受け付ける
+  match '*path' => 'options_request#response_preflight_request', via: :options
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
