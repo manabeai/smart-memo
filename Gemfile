@@ -46,5 +46,5 @@ group :development, :test do
   gem "faker"
   gem "rspec-rails"
   # Gemfile
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end
