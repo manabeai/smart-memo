@@ -5,7 +5,7 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
-import MemoComponent from "@/components/MemoComponent"
+import MemoComponent from "@/components/MemoComponent";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -47,6 +47,7 @@ export default function RootLayout({
             <TextEditor />
             
             }
+            <MemoComponent />
             {children}
           </main>
         </SidebarProvider>
