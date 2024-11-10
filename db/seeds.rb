@@ -34,6 +34,7 @@ users = User.create!([
   { email: 'user3@example.com', password: 'password', uuid: SecureRandom.uuid, guest: false },
   { email: 'user4@example.com', password: 'password', uuid: SecureRandom.uuid, guest: false }
 ])
+User.create!(id: 1,email: 'user11@example.com', password: 'password', uuid: SecureRandom.uuid, guest: true) unless User.exists?(id: 1)
 
 DefaultTag.create([
   { name: '健康' },
