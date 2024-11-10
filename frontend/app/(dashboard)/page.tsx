@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area";
 import api from '@/utils/index.ts';
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
