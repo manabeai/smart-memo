@@ -5,6 +5,7 @@ RSpec.describe "Memos", type: :request do
 
   describe "GET /memos" do
     it "returns a successful response" do
+      create_list(:memo, 5, user: user)
       get "/memos"
 
       expect(response).to have_http_status(:success)

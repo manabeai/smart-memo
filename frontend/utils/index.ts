@@ -1,37 +1,20 @@
 import Axios from 'axios';
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const api = Axios.create({
     baseURL: 'http://localhost:3000',
     withCredentials: true,
-    timeout: 1000,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-// api.interceptors.request.use(
-//     (config) => {
-//         // 認証トークンを取得（ローカルストレージやセッションストレージから）
-//         const token = localStorage.getItem('authToken'); // 例としてローカルストレージから取得
-
-//         if (token) {
-//             // ヘッダーにトークンを追加
-//             config.headers['Authorization'] = `Bearer ${token}`;
-//         }
-
-//         return config; // 必ずconfigを返す
-//     },
-//     (error) => {
-//         // エラーがあった場合はエラーを返す
-//         return Promise.reject(error);
-//     }
-// );
-
-
 api.interceptors.response.use(
     (response) => {
+        console.log('Response:', response);
+
         // レスポンスのヘッダーにクッキーが含まれているか確認
         const setCookieHeader = response.headers['set-cookie'];
         if (setCookieHeader) {
@@ -39,10 +22,13 @@ api.interceptors.response.use(
         } else {
             console.log('クッキーは生成されていません。');
         }
-        return response; // レスポンスを返す
+        return response; 
     },
     (error) => {
-        return Promise.reject(error); // エラーを返す
+    // レスポンスの内容を表示
+        console.error('Error Response:', error);
+        window.location.href = '/sign_ins';  // 一般的なエラーハンドリング
+        return Promise.reject(error);
     }
 );
 
