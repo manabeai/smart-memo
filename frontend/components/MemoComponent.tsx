@@ -49,15 +49,17 @@ const MemoCard = ({ memo, onDelete }) => (
   >
     <Card style={{ backgroundColor: memo.color }}>
       <CardHeader>
-        <CardTitle>{memo.title}</CardTitle>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2"
-          onClick={() => onDelete(memo.id)}
-        >
-          <X className="h-4 w-4" />
-        </Button>
+        <div className="flex justify-between items-center relative">
+          <CardTitle className="top-1 left-1">{memo.title}</CardTitle>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="top-1 right-1"
+            onClick={() => onDelete(memo.id)}
+          >
+            <X className="h-4 w-4" />
+            </Button>
+          </div>
       </CardHeader>
       <CardContent>
         <p>{memo.content}</p>
