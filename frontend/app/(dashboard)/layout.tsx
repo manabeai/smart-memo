@@ -41,17 +41,8 @@ export default function RootLayout({
 
         <SidebarProvider>
           <AppSidebar />
-          <main>
-            <SignInButton/>
+          <main className="ml-5 mt-5 gap-y-5 flex flex-col">
             <SidebarTrigger />
-            {/*
-            TextEditor -> テキストエリアのコンポーネント(の予定)
-            これを含んで実行したらエラーが発生。
-            <TextEditor />
-            */
-            <TextEditor />
-            
-            }
             <MemoComponent />
             {children}
           </main>
