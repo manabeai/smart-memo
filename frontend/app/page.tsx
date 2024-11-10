@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area";
-import api from '@/utils/index';
+import api from '@/utils/index.ts';
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 
@@ -20,7 +20,7 @@ const formatDate = (dateString: string) => {
 }
 
 // デフォルトでServer Componentとして動作します
-export default function MemoList() {
+export default function MemoList() {  
   const [memos, setMemos] = useState<Memo[]>([]); // ステートフックでメモを管理
 
   useEffect(() => {
