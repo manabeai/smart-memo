@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
+import MemoComponent from "@/components/MemoComponent";
 import { SignInButton } from '@/components/sign-in-bottun'
 
 const geistSans = localFont({
@@ -40,20 +41,13 @@ export default function RootLayout({
 
         <SidebarProvider>
           <AppSidebar />
-          <main>
-            <SignInButton/>
+          <main className="ml-5 mt-5 gap-y-5 flex flex-col">
             <SidebarTrigger />
-            {/*
-            TextEditor -> テキストエリアのコンポーネント(の予定)
-            これを含んで実行したらエラーが発生。
-            <TextEditor />
-            */
-            <TextEditor />
-            }
-            { children }
+            <MemoComponent />
+            {children}
           </main>
         </SidebarProvider>
-        
+
       </body>
     </html>
   );
