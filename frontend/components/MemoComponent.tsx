@@ -54,7 +54,7 @@ const MemoCard = ({ memo, onDelete }) => (
           <Button
             variant="ghost"
             size="icon"
-            className="top-1 right-1"
+            className="abusolute top-1 right-1"
             onClick={() => onDelete(memo.id)}
           >
             <X className="h-4 w-4" />
