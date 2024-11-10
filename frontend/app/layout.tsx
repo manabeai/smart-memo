@@ -5,6 +5,7 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
+import { SignInButton } from '@/components/sign-in-bottun'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,10 +35,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      
+        
 
         <SidebarProvider>
           <AppSidebar />
           <main>
+            <SignInButton/>
             <SidebarTrigger />
             {/*
             TextEditor -> テキストエリアのコンポーネント(の予定)
