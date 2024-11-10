@@ -79,5 +79,4 @@ class MemosController < ApplicationController
   def user_id
     @user_id = User.find()
   end
-
 end

@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::API
   before_action :log_request_details, :authenticate_user
-
+  # 検証用にユーザーidを1で固定する。本番では消す
   def initialize
-    @user_uuid = 1
-    @default = 1
+    @temporary_user = true
   end
 
   private
@@ -21,16 +20,15 @@ class ApplicationController < ActionController::API
   def authenticate_user
     # リクエストからクッキーを取得
     user_session = request.cookies["user_session"]
-
-    # クッキーが空か、またはデータベースに該当するユーザーが存在しない場合一時ユーザー作成
-    if user_session.blank? || User.find_by(uuid: user_session).nil?
+    if @temporary_user
+      @user_id = 1
+    elsif user_session.blank? || User.find_by(uuid: user_session).nil?
       Rails.logger.info "既存のクッキーとユーザーが見つかりませんでした"
-      render json: { error: 'Unauthorized' }, status: :unauthorized, location: '/sign_ins'
+      render json: { error: "Unauthorized" }, status: :unauthorized, redirect_to: "/sign_ins"
       return
     else
       Rails.logger.info "既存のクッキーとユーザーが見つかりました: ユーザーID #{user_session}"
       @user_id = User.find_by(uuid: user_session).id
-      Rails.logger.info "ユーザーID #{@user_id}"
     end
   end
 end
