@@ -144,13 +144,13 @@ export default function Component() {
   }
 
   const updateNoteStatus = (id: number, status: NoteStatus) => {
-    setNotes(notes.map(note =>
+    setNotes(notes.map(note => 
       note.id === id ? { ...note, status, updatedAt: new Date() } : note
     ))
   }
 
   const togglePin = (id: number) => {
-    setNotes(notes.map(note =>
+    setNotes(notes.map(note => 
       note.id === id ? { ...note, isPinned: !note.isPinned, updatedAt: new Date() } : note
     ))
   }
@@ -159,11 +159,11 @@ export default function Component() {
     setNotes(notes.filter(note => note.id !== id))
   }
 
-  const filteredNotes = notes.filter(note =>
+  const filteredNotes = notes.filter(note => 
     note.status === activeTab &&
     (note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+    note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
   )
 
   const sortedNotes = [...filteredNotes].sort((a, b) => {
@@ -272,11 +272,11 @@ export default function Component() {
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">メモ一覧</h1>
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="icon" onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-                className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition-all duration-300">
+                      className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition-all duration-300">
                 {viewMode === 'grid' ? <List className="h-4 w-4" /> : <Grid className="h-4 w-4" />}
               </Button>
               <Button variant="ghost" size="icon" onClick={() => setIsDarkTheme(!isDarkTheme)}
-                className="bg-transparent border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300">
+                      className="bg-transparent border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300">
                 {isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
               </Button>
             </div>
@@ -321,34 +321,34 @@ export default function Component() {
                         {note.status === 'active' && (
                           <>
                             <Button variant="ghost" size="icon" onClick={() => togglePin(note.id)}
-                              className="text-white hover:bg-white hover:bg-opacity-20">
+                                    className="text-white hover:bg-white hover:bg-opacity-20">
                               <Pin className={`h-4 w-4 ${note.isPinned ? 'fill-current' : ''}`} />
                             </Button>
                             <Button variant="ghost" size="icon" onClick={() => updateNoteStatus(note.id, 'archived')}
-                              className="text-white hover:bg-white hover:bg-opacity-20">
+                                    className="text-white hover:bg-white hover:bg-opacity-20">
                               <Archive className="h-4 w-4" />
                             </Button>
                           </>
                         )}
                         {note.status === 'archived' && (
                           <Button variant="ghost" size="icon" onClick={() => updateNoteStatus(note.id, 'active')}
-                            className="text-white hover:bg-white hover:bg-opacity-20">
+                                  className="text-white hover:bg-white hover:bg-opacity-20">
                             <Archive className="h-4 w-4 fill-current" />
                           </Button>
                         )}
                         {note.status !== 'trashed' ? (
                           <Button variant="ghost" size="icon" onClick={() => updateNoteStatus(note.id, 'trashed')}
-                            className="text-white hover:bg-white hover:bg-opacity-20">
+                                  className="text-white hover:bg-white hover:bg-opacity-20">
                             <Trash className="h-4 w-4" />
                           </Button>
                         ) : (
                           <Button variant="ghost" size="icon" onClick={() => deleteNote(note.id)}
-                            className="text-white hover:bg-white hover:bg-opacity-20">
+                                  className="text-white hover:bg-white hover:bg-opacity-20">
                             <Trash className="h-4 w-4 fill-current" />
                           </Button>
                         )}
                         <Button variant="ghost" size="icon" onClick={() => openEditDialog(note)}
-                          className="text-white hover:bg-white hover:bg-opacity-20">
+                                className="text-white hover:bg-white hover:bg-opacity-20">
                           <Edit className="h-4 w-4" />
                         </Button>
                       </div>
@@ -479,7 +479,7 @@ export default function Component() {
                         ...editingNote,
                         checklistItems: editingNote.checklistItems?.filter(i => i.id !== item.id)
                       }) : removeChecklistItem(item.id)}
-                        className="text-white hover:bg-white hover:bg-opacity-20">
+                              className="text-white hover:bg-white hover:bg-opacity-20">
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
