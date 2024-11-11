@@ -1,0 +1,73 @@
+name: deploy backend
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_REGION: ap-northeast-1                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: smart-memo/backend         # set this to your Amazon ECR repository name
+  ECS_SERVICE: backend                       # set this to your Amazon ECS service name
+  ECS_CLUSTER: smart-memo                     # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: .aws/task-definition-backend.json  # set this to the path to your Amazon ECS task definition
+                                              # file, e.g. .aws/task-definition.json
+  CONTAINER_NAME: smart-memo-backend
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # AWS 認証
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      # ECR ログイン
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr # outputs で参照するために id を設定
+
+      # Docker イメージを build・push する
+      - name: build and push docker image to ecr
+        id: build-image # outputs で参照するために id を設定
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} # ECR レジストリを `aws-actions/amazon-ecr-login` アクションの `outputs.registry` から取得
+          IMAGE_TAG: test # 任意のイメージタグ
+        run: |
+          docker build . --tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          # outputs で参照するために `image_id` という名前で出力
+          echo "image_id=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
+
+      - name: Update ECS task definition and ecs-task-def.json with AWS Account ID
+        run: |
+          sed -i 's|\[AWS_ACCOUNT_ID\]|${{ env.AWS_ACCOUNT_ID }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[IMAGE_ID\]|${{ steps.build-image.outputs.image_id }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[AWS_REGION\]|${{ env.AWS_REGION }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[CONTAINER_NAME\]|${{ env.CONTAINER_NAME }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[DB_NAME\]|${{ secrets.DB_NAME }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[DB_USERNAME\]|${{ secrets.DB_USERNAME }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[DB_PASSWORD\]|${{ secrets.DB_PASSWORD }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[DB_HOST\]|${{ secrets.DB_HOST }}|g' ${{ env.ECS_TASK_DEFINITION }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image_id }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+          force-new-deployment: true
+
