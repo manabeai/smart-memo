@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
-import { TextEditor } from "@/components/text-editor"
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { TextEditor } from "@/components/text-editor";
 import MemoComponent from "@/components/MemoComponent";
-import { SignInButton } from '@/components/sign-in-bottun'
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SignInButton } from '@/components/sign-in-bottun';
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -36,18 +37,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      
-        
-
         <SidebarProvider>
           <AppSidebar />
-          <main className="ml-5 mt-5 gap-y-5 flex flex-col">
-            <SidebarTrigger />
-            <MemoComponent />
+          <main className="flex flex-col gap-y-5 w-full">
+            {/* SidebarTrigger を MemoComponent に渡す */}
             {children}
+            <MemoComponent SidebarTrigger={<SidebarTrigger />} />
           </main>
         </SidebarProvider>
-
       </body>
     </html>
   );
