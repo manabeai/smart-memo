@@ -55,7 +55,7 @@ jobs:
           DB_NAME: test_db
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
-          DATABASE_URL: postgresql://postgres@localhost:5432/postgres?encoding=utf8&pool=5&timeout=5000
+          DB_HOST: postgresql://postgres@localhost:5432/postgres?encoding=utf8&pool=5&timeout=5000
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
