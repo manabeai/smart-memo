@@ -19,7 +19,7 @@ env:
   IMAGE_TAG: test
 
 jobs:
-  push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
