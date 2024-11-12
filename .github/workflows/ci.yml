@@ -66,6 +66,9 @@ jobs:
       - name: Run RSpec
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgresql://postgres@localhost:5432/postgres?encoding=utf8&pool=5&timeout=5000
+          DB_NAME: test_db
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
         run: |
           bundle exec rspec
