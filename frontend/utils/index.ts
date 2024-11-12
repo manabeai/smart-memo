@@ -1,9 +1,9 @@
 import Axios from 'axios';
 
-// export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export const api = Axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: API_URL,
     withCredentials: true,
     timeout: 5000,
     headers: {
