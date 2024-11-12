@@ -16,4 +16,5 @@ RUN bundle install
 
 EXPOSE 3000
 ENV RAILS_ENV=test
+RUN chmod +x ./entrypoint.sh
 CMD ["./entrypoint.sh"]
