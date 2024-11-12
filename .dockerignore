@@ -40,3 +40,6 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+**/node_modules
+/.aws
