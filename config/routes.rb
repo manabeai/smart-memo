@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   add_openapi_route "DELETE", "/tags/{id}", controller_name: "tags", action_name: "destroy"
   add_openapi_route "GET", "/tags", controller_name: "tags", action_name: "index"
   add_openapi_route "PATCH", "/tags/{id}", controller_name: "tags", action_name: "update"
+  add_openapi_route "POST", "/sign_ins", controller_name: "sign_ins", action_name: "create"
   resources :posts
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

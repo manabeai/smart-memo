@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "@/app/globals.css";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
+import MemoComponent from "@/components/MemoComponent";
+import { SignInButton } from '@/components/sign-in-bottun'
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -24,6 +26,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -33,22 +36,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      
+        
 
         <SidebarProvider>
           <AppSidebar />
-          <main>
+          <main className="ml-5 mt-5 gap-y-5 flex flex-col">
             <SidebarTrigger />
-            {/*
-            TextEditor -> テキストエリアのコンポーネント(の予定)
-            これを含んで実行したらエラーが発生。
-            <TextEditor />
-            */
-            <TextEditor />
-            }
-            { children }
+            <MemoComponent />
+            {children}
           </main>
         </SidebarProvider>
-        
+
       </body>
     </html>
   );
