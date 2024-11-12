@@ -14,6 +14,8 @@ env:
   ECS_CLUSTER: smart-memo                     # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition-frontend.json  # set this to the path to your Amazon ECS task definition
                                               # file, e.g. .aws/task-definition.json
+  NEXT_PUBLIC_API_URL: 54.64.213.56:3000
+
   CONTAINER_NAME: smart-memo-frontend
   DOCKER_FILE: Dockerfile-release.frontend
   IMAGE_TAG: test
@@ -53,6 +55,7 @@ jobs:
           sed -i 's|\[IMAGE_ID\]|${{ steps.build-image.outputs.image_id }}|g' ${{ env.ECS_TASK_DEFINITION }}
           sed -i 's|\[AWS_REGION\]|${{ env.AWS_REGION }}|g' ${{ env.ECS_TASK_DEFINITION }}
           sed -i 's|\[CONTAINER_NAME\]|${{ env.CONTAINER_NAME }}|g' ${{ env.ECS_TASK_DEFINITION }}
+          sed -i 's|\[NEXT_PUBLIC_API_URL\]|${{ env.NEXT_PUBLIC_API_URL }}|g' ${{ env.ECS_TASK_DEFINITION }}
 
       - name: タスク定義を更新
         id: task-def
