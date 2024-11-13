@@ -7,7 +7,7 @@ export const api = Axios.create({
     withCredentials: true,
     timeout: 5000,
     headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
     },
 });
 
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     (error) => {
     // レスポンスの内容を表示
         console.error('Error Response:', error);
-        window.location.href = '/sign_ins';  // 一般的なエラーハンドリング
+        // window.location.href = '/sign_ins';  
         return Promise.reject(error);
     }
 );
