@@ -109,9 +109,9 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) 
           </div>
         </CardContent>
         <CardFooter>
-          <p className="text-xs text-gray-500">Created on {memo.created_at.toString()}</p>
+          <p className="text-xs text-gray-500">作成日時 {memo.created_at.toString()}</p>
           {(isEditingTitle || isEditingContent) && (
-            <Button onClick={handleSubmitEdit} className="mt-4">Save</Button>
+			<Button onClick={handleSubmitEdit} className="mt-4 text-right">保存</Button>
           )}
         </CardFooter>
       </Card>
