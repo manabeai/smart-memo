@@ -2,8 +2,6 @@ name: deploy backend
 
 on:
   push:
-    branches:
-      - "main"
     tags:
       - "v*.*.*"
   workflow_dispatch:
@@ -17,15 +15,17 @@ env:
   ECS_TASK_DEFINITION: .aws/task-definition-backend.json  # set this to the path to your Amazon ECS task definition
                                               # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: smart-memo-backend
+  DOCKER_FILE: Dockerfile-release
+  IMAGE_TAG: test
 
 jobs:
-  push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       # AWS 認証
-      - name: Configure AWS credentials
+      - name: AWS認証
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -36,18 +36,17 @@ jobs:
         id: login-ecr # outputs で参照するために id を設定
 
       # Docker イメージを build・push する
-      - name: build and push docker image to ecr
+      - name: Dockerビルド+ECRにプッシュ
         id: build-image # outputs で参照するために id を設定
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} # ECR レジストリを `aws-actions/amazon-ecr-login` アクションの `outputs.registry` から取得
-          IMAGE_TAG: test # 任意のイメージタグ
         run: |
-          docker build . --tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} -f Dockerfile-release
+          docker build . --tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} -f ${{ env.DOCKER_FILE }}
           docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           # outputs で参照するために `image_id` という名前で出力
           echo "image_id=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
-      - name: Update ECS task definition and ecs-task-def.json with AWS Account ID
+      - name: タスク定義のjsonファイルを変数で置換
         run: |
           sed -i 's|\[AWS_ACCOUNT_ID\]|${{ env.AWS_ACCOUNT_ID }}|g' ${{ env.ECS_TASK_DEFINITION }}
           sed -i 's|\[IMAGE_ID\]|${{ steps.build-image.outputs.image_id }}|g' ${{ env.ECS_TASK_DEFINITION }}
@@ -58,7 +57,7 @@ jobs:
           sed -i 's|\[DB_PASSWORD\]|${{ secrets.DB_PASSWORD }}|g' ${{ env.ECS_TASK_DEFINITION }}
           sed -i 's|\[DB_HOST\]|${{ secrets.DB_HOST }}|g' ${{ env.ECS_TASK_DEFINITION }}
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
+      - name: タスク定義を更新
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
@@ -66,8 +65,8 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image_id }}
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      - name: サービスにタスク定義を反映しデプロイ
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.1.2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
