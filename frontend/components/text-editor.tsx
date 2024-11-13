@@ -1,4 +1,5 @@
 'use client'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -14,12 +15,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
 import api from '@/utils/index'
-import { Memo } from '@/components/MemoCard'
-interface TextEditorProps {
-  setMemos: React.Dispatch<React.SetStateAction<Memo[]>>;
-}
+import { Memo } from '@/components/memo-card'
+
   
 const FormSchema = z.object({
     title: z
@@ -31,47 +31,38 @@ const FormSchema = z.object({
     }),
 });
 
-export function TextEditor() {
-    const form = useForm({
-        resolver: zodResolver(FormSchema),
-    })
+interface PostMemo {
+    title: string
+    content: string
+};
 
-    function onSubmit(data) {
-        toast({
-            title: "Bio: ",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{ JSON.stringify(data, null, 2) }</code>
-                </pre>
-            ),
-        })
+export function TextEditor() {
+
+    const [newMemo, setNewMemo] = useState<PostMemo>({ title: '', content: ''})
+
+    const handleSubmit = async () => {
+        // await api.get('/');
+        const response = await api.post('/memos', newMemo);
+        console.log(response);
     }
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-                <FormField
-                    control={form.control}
-                    name="bio"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Bio</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Tell us a little bit about yourself"
-                                    className="resize-none"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                You can <span>@mention</span> other users and organizations.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit">Submit</Button>
-            </form>
-        </Form>
-    )
+        <div className="w-2/3 space-y-4">
+            <Input
+                type="text"
+                placeholder="タイトル"
+                value={newMemo.title}
+                onChange={(e) => setNewMemo({ ...newMemo, title: e.target.value })}
+                className="mb-2"
+            />
+            <textarea
+                placeholder="メモの内容"
+                value={newMemo.content}
+                onChange={(e) => setNewMemo({ ...newMemo, content: e.target.value })}
+                className="w-full p-2 border rounded mb-2"
+                rows={3}
+            />
+            <Button onClick={handleSubmit}>Submit</Button>
+        </div>
+    );
 }

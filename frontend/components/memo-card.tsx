@@ -21,13 +21,11 @@ export type Memo = {
   tags: Tag[];
 };
 
-
-
 export interface MemoCardProps {
   memo: Memo;
   onDelete: (id: number) => void;
   onUpdate: (updatedMemo: Memo) => void;  // 編集後のメモを親コンポーネントに渡す
-}
+};
 
 export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -79,13 +77,13 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) 
               >
                 <X className="h-4 w-4" />
               </Button>
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsEditingContent(true)}  // 内容編集モードを開く
               >
                 <Edit className="h-4 w-4" />
-              </Button>
+              </Button> */}
             </div>
           </div>
         </CardHeader>
