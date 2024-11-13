@@ -6,12 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { X, Edit } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-type Tag = {
+export type Tag = {
   id: number;
   name: string;
 };
 
-type Memo = {
+export type Memo = {
   id: number;
   user_id: number;
   title: string;
@@ -20,6 +20,8 @@ type Memo = {
   updated_at: Date;
   tags: Tag[];
 };
+
+
 
 export interface MemoCardProps {
   memo: Memo;

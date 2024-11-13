@@ -15,17 +15,21 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-
+import api from '@/utils/index'
+import { Memo } from '@/components/MemoCard'
+interface TextEditorProps {
+  setMemos: React.Dispatch<React.SetStateAction<Memo[]>>;
+}
+  
 const FormSchema = z.object({
-    bio: z
-        .string()
-        .min(10, {
-            message: "Bio must be at least 10 characters.",
-        })
-        .max(160, {
-            message: "Bio must not exceed 160 characters.",
-        }),
-})
+    title: z
+      .string(),
+    content: z
+      .string()
+      .min(1, {
+        message: "何も入力されていません",
+    }),
+});
 
 export function TextEditor() {
     const form = useForm({
