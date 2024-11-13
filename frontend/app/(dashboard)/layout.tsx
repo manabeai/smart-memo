@@ -48,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{children: React.React
                 {isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
               </Button>
             </div>
-            <MemoComponent />
+            
             {children}
           </div>
         </main>

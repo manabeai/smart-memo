@@ -62,10 +62,14 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
+    "envify": "^4.1.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "typescript": "^5"
+    "terser": "^5.36.0",
+    "terser-brunch": "^4.1.0",
+    "typescript": "^5",
+    "uglifyify": "^5.0.2"
   }
 }

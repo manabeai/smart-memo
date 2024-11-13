@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Plus, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { MemoCard, DeleteMemo } from './memo-card'
+import { api } from '@/utils/index'
 
 // OpenAI APIのモックアップ関数
 const mockGenerateTags = async (content: string) => {
@@ -16,72 +18,25 @@ const mockGenerateTags = async (content: string) => {
   return ['タグ1', 'タグ2', 'タグ3']
 }
 
-interface Memo {
-  id: number
-  title: string
-  content: string
-  color: string
-  tags: string[]
-}
-
-const ColorPicker = ({ colors, selectedColor, onColorSelect }) => (
-  <div className="grid grid-cols-5 gap-2">
-    {colors.map((color) => (
-      <motion.button
-        key={color}
-        className="w-8 h-8 rounded-full"
-        style={{ backgroundColor: color }}
-        onClick={() => onColorSelect(color)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      />
-    ))}
-  </div>
-)
-
-const MemoCard = ({ memo, onDelete }) => (
-  <motion.div
-    layout
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    exit={{ opacity: 0, scale: 0.8 }}
-    transition={{ duration: 0.3 }}
-  >
-    <Card style={{ backgroundColor: memo.color }}>
-      <CardHeader>
-        <div className="flex justify-between items-center relative">
-          <CardTitle className="top-1 left-1">{memo.title}</CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="abusolute top-1 right-1"
-            onClick={() => onDelete(memo.id)}
-          >
-            <X className="h-4 w-4" />
-            </Button>
-          </div>
-      </CardHeader>
-      <CardContent>
-        <p>{memo.content}</p>
-        <div className="mt-2">
-          {memo.tags.map((tag, index) => (
-            <Badge key={index} variant="secondary" className="mr-1">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  </motion.div>
-)
-
 export default function MemoApp() {
   const [memos, setMemos] = useState<Memo[]>([])
-  const [newMemo, setNewMemo] = useState({ title: '', content: '', color: '#ffffff' })
+  const [newMemo, setNewMemo] = useState({ title: '', content: '' })  // 色関連のstate削除
   const [searchTerm, setSearchTerm] = useState('')
-  const [isColorModalOpen, setIsColorModalOpen] = useState(false)
 
-  const colors = ['#ffffff', '#f28b82', '#fbbc04', '#fff475', '#ccff90', '#a7ffeb', '#cbf0f8', '#aecbfa', '#d7aefb', '#fdcfe8']
+  useEffect(() => {
+    const fetchMemos = async () => {
+      try {
+        const response = await api.get<Memo[]>('/memos');
+        // const data: Memo[] = await response.data;
+        setMemos(response.data);
+        console.log('Memos received:', data)
+      } catch (error) {
+        console.error('Failed to fetch memos:', error)
+      }
+    }
+
+    fetchMemos()
+  }, [])
 
   const addMemo = async () => {
     if (newMemo.title || newMemo.content) {
@@ -92,7 +47,7 @@ export default function MemoApp() {
         tags
       }
       setMemos([...memos, memo])
-      setNewMemo({ title: '', content: '', color: '#ffffff' })
+      setNewMemo({ title: '', content: '' })
     }
   }
 
@@ -105,6 +60,7 @@ export default function MemoApp() {
     memo.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
     memo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
   )
+  // const filteredMemos = memos
 
   const onDragEnd = (result) => {
     if (!result.destination) return
@@ -145,26 +101,6 @@ export default function MemoApp() {
           rows={3}
         />
         <div className="flex justify-between">
-          <Dialog open={isColorModalOpen} onOpenChange={setIsColorModalOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" style={{ backgroundColor: newMemo.color }}>
-                色を選択
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>色を選択</DialogTitle>
-              </DialogHeader>
-              <ColorPicker
-                colors={colors}
-                selectedColor={newMemo.color}
-                onColorSelect={(color) => {
-                  setNewMemo({ ...newMemo, color })
-                  setIsColorModalOpen(false)
-                }}
-              />
-            </DialogContent>
-          </Dialog>
           <Button onClick={addMemo}>
             <Plus className="mr-2 h-4 w-4" /> メモを追加
           </Button>
