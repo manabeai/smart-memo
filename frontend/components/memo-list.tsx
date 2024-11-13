@@ -13,26 +13,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { MemoCard, DeleteMemo } from './memo-card'
 import { api } from '@/utils/index'
 
+
 const formatDate = (dateString: string) => {
     return format(new Date(dateString), 'yyyy年MM月dd日 HH:mm', { locale: ja })
   }
   
   // デフォルトでServer Componentとして動作します
-  export default function MemoList({ onDelete, onUpdate }) {
-    const [memos, setMemos] = useState<Memo[]>([]); // ステートフックでメモを管理
-  
-    useEffect(() => {
-      const fetchMemos = async () => {
-        try {
-          const response = await api.get('/memos'); // /memosからデータを取得
-          setMemos(response.data); // 取得したデータをステートに設定
-        } catch (error) {
-          console.error("メモの取得に失敗しました:", error);
-        }
-      };
-  
-      fetchMemos(); // コンポーネントマウント時にデータをフェッチ
-    }, []); // 空の依存配列で、初回レンダリング時のみ実行
+  export default function MemoList({ memos, onDelete, onUpdate }) {
   
     return (
       <div className="container mx-auto px-4 py-8">

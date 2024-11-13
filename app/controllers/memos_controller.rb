@@ -13,7 +13,7 @@ class MemosController < ApplicationController
     @memo = Memo.create(title: params[:title], content: params[:content], user_id: @user_id)
 
     params[:tags].each do |tag|
-      unless tag[:is_user_defined].nil?
+      unless tag[:is_user_defined].nil? && Tag.exists?(name: tag[:name])
         Tagging.create(memo_id: @memo.id, tag_id: tag[:is_user_defined])
       else
         @tag = Tag.create(name: tag[:name], user_id: @user_id)
@@ -39,14 +39,14 @@ class MemosController < ApplicationController
   end
 
   def index
-    @memos = User.find(@user_id).memos.includes(:tags)
+    @memos = User.find(@user_id).memos.includes(:tags).order(updated_at: :desc)
 
     render json: @memos.as_json(include: { tags: { only: [ :id, :name ] } })
   end
 
   def create
     tags = Tag.all.limit(3).map { |tag| { name: tag.name, is_user_defined: tag.id } }
-    tags << { name: DefaultTag.first.name, is_user_defined: nil }
+    tags << { name: DefaultTag.second.name, is_user_defined: nil }
     render json: {
       title: "sample_title",
       content: "sample_content",

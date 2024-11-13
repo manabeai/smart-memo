@@ -6,10 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { X, Edit } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export type Tag = {
+type Tag = {
   id: number;
   name: string;
-};
+}
 
 export type Memo = {
   id: number;
@@ -28,6 +28,7 @@ export interface MemoCardProps {
 };
 
 export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) => {
+
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [updatedMemo, setUpdatedMemo] = useState({ ...memo });
