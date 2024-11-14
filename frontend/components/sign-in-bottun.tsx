@@ -1,7 +1,6 @@
 'use client';
-import api from '@/utils/index.ts';
-import { button } from '@/components/ui/button'
-
+import api from '@/utils/index';
+import { Button } from "@/components/ui/button";
 export const SignInButton = () => {
   const handlePost = async () => {
     try {
@@ -14,6 +13,7 @@ export const SignInButton = () => {
   };
   return (
     <div>
+      <Button variant="outline" > サインイン</Button>
       <button onClick={handlePost}>Sign In</button>
     </div>
   );

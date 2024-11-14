@@ -4,8 +4,12 @@ import MemoList from '@/components/memo-list'
 import { TextEditor } from '@/components/text-editor'
 import { Memo } from '@/components/memo-card'
 import api from '@/utils/index'
+import { SidebarProvider, SidebarTrigger, AppSidebar } from "@/components/ui/sidebar"
 
-const Page = () => {
+type PageProps = {
+  selectedTag: number | null; 
+}
+const Page = ({ selectedTag }: PageProps) => {
 
   const [memos, setMemos] = useState<Memo[]>([]);
 
@@ -36,10 +40,15 @@ const Page = () => {
     setMemos((memos) => [newMemo, ...memos]);
   }
 
+  const filteredMemos = selectedTag
+  ? memos.filter((memo) => memo.tags.some((tag) => tag.id === selectedTag))
+  : memos;
+
   return (
     <div>
+      {/* <SidebarProvider /> */}
       <TextEditor onMemoCreate={handleNewMemo} />
-      <MemoList memos={memos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} />
+      <MemoList memos={filteredMemos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} />
     </div>
   )
 };

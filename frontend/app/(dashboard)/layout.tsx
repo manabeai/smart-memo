@@ -1,9 +1,9 @@
 'use client';
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
-import { PlusCircle, Moon, Sun, Search, Tag, Pin, Trash, Mic, Image, CheckSquare, Type, X, Archive, Share2, Twitter, Link, MessageCircle, Grid, List, Edit, Sparkles } from 'lucide-react';
+import { PlusCircle, Moon, Sun, Search, Pin, Trash, Mic, Image, CheckSquare, Type, X, Archive, Share2, Twitter, Link, MessageCircle, Grid, List, Edit, Sparkles } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,9 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
 import MemoComponent from "@/components/MemoComponent";
 import { SignInButton } from '@/components/sign-in-bottun'
+import { Tag } from '@/components/memo-card'
+import { AppSidebarProps } from '@/components/app-sidebar';
+import api from '@/utils/index'
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
@@ -33,12 +36,31 @@ type ViewMode = 'grid' | 'list'
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
+	const [tags, setTags] = useState<Tag[]>([]);
+	const [selectedTag, setSelectedTag] = useState<null | number>(null)
+
+	const fetchTags = async () => {
+		try {
+		  const response = await api.get('/tags');
+		  setTags(response.data);
+		} catch (error) {
+		  console.error("タグの取得に失敗しました:", error);
+		}
+	  };
+	useEffect(() => {
+	  fetchTags(); 
+	}, []); 
+	
+	const handleTagClick = (tagId: number) => {
+	setSelectedTag(tagId);
+	};
+	
 	return (
 		<html lang="ja">
 			<TooltipProvider>
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-auto`}>
 					<SidebarProvider>
-						<AppSidebar />
+						<AppSidebar tags={tags} onClickTag={handleTagClick} />
 						<main className={`h-auto w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
 							<div className={`h-auto w-full`}>
 								<div className={`flex justify-start`}>
