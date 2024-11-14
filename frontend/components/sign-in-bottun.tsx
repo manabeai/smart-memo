@@ -1,6 +1,5 @@
 'use client';
-import api from '@/utils/index.ts';
-import { button } from '@/components/ui/button'
+import api from '@/utils/index';
 
 export const SignInButton = () => {
   const handlePost = async () => {

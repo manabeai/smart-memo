@@ -1,36 +1,16 @@
 'use client'
 import React, { useState } from 'react'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Badge } from "@/components/ui/badge"
 
-import { toast } from "@/hooks/use-toast"
-import { Button } from "./ui/button"
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
 import api from '@/utils/index'
-import { Memo, Tag } from '@/components/memo-card'
+import { Memo } from '@/components/memo-card'
 
-  
-const FormSchema = z.object({
-	title: z
-		.string(),
-	content: z
-		.string()
-		.min(1, {
-			message: "何も入力されていません",
-		}),
-});
+type Tag = {
+	name: string;
+}
 
 type suggestedTag = {
 	name: string
@@ -40,10 +20,6 @@ type suggestedTag = {
 interface PostMemo {
 	title: string
 	content: string
-};
-
-interface CreateMemo extends PostMemo {
-	tags: suggestedTag[]
 };
 
 interface TextEditorProps {
