@@ -47,4 +47,5 @@ group :development, :test do
   gem "rspec-rails"
   # Gemfile
   gem "database_cleaner-active_record"
+  gem 'pry-rails'
 end
