@@ -12,8 +12,6 @@ import { AppSidebar } from "@/components/app-sidebar"
 
 import Page from "./page"
 
-import Page from "./page"
-
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
 	variable: "--font-geist-sans",
