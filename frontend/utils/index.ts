@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = 'http://localhost:4000';
 
 export const api = Axios.create({
     baseURL: API_URL,
@@ -25,11 +25,16 @@ api.interceptors.response.use(
         return response; 
     },
     (error) => {
-    // レスポンスの内容を表示
-        console.error('Error Response:', error);
-        // window.location.href = '/sign_ins';  
+        if (error.response) {
+          // サーバーがエラーコードで応答した場合
+          console.error('Error Response:', error.response);
+        } else if (error.request) {
+          console.error('ネットワークエラー: サーバーからの応答がありません', error.request);
+        } else {
+          console.error('リクエスト設定エラー:', error.message);
+        }
         return Promise.reject(error);
-    }
+      }
 );
 
 export default api;
