@@ -14,7 +14,7 @@ env:
   ECS_CLUSTER: smart-memo                     # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition-frontend.json  # set this to the path to your Amazon ECS task definition
                                               # file, e.g. .aws/task-definition.json
-  NEXT_PUBLIC_API_URL: NEXT_PUBLIC_API_URL=54.64.213.56:3000
+  NEXT_PUBLIC_API_URL: NEXT_PUBLIC_API_URL=http://54.64.213.56:3000
   ENV_FILE: frontend/.env.production
 
   CONTAINER_NAME: smart-memo-frontend
