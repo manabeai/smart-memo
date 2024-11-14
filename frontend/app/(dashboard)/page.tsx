@@ -1,5 +1,5 @@
 'use client';
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import MemoList from '@/components/memo-list'
 import { TextEditor } from '@/components/text-editor'
 import { Memo } from '@/components/memo-card'

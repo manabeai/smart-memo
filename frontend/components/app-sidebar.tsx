@@ -29,7 +29,11 @@ const items = [
 	},
 ]
 
-export function AppSidebar({ isDarkTheme }) {
+interface AppSidebarProps {
+	isDarkTheme: boolean;
+}
+
+export function AppSidebar({ isDarkTheme }: AppSidebarProps) {
 	return (
 		<Sidebar>
 			<SidebarContent>
