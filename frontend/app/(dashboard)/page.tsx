@@ -5,8 +5,12 @@ import { TextEditor } from '@/components/text-editor'
 import { Memo } from '@/components/memo-card'
 import api from '@/utils/index'
 
-const Page = () => {
+interface PageProps {
+  isDarkTheme: boolean;
+}
 
+const Page = ({isDarkTheme}: PageProps) => {
+  
   const [memos, setMemos] = useState<Memo[]>([]);
 
   const fetchMemos = async () => {
@@ -38,8 +42,8 @@ const Page = () => {
 
   return (
     <div>
-      <TextEditor onMemoCreate={handleNewMemo} />
-      <MemoList memos={memos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} />
+      <TextEditor onMemoCreate={handleNewMemo} isDarkTheme={isDarkTheme}/>
+      <MemoList memos={memos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} isDarkTheme={isDarkTheme}/>
     </div>
   )
 };

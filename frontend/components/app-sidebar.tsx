@@ -29,12 +29,12 @@ const items = [
 	},
 ]
 
-export function AppSidebar() {
+export function AppSidebar({ isDarkTheme }) {
 	return (
 		<Sidebar>
 			<SidebarContent>
-				<SidebarGroup>
-					<SidebarGroupLabel>Items</SidebarGroupLabel>
+				<SidebarGroup className={`h-full ${!isDarkTheme ? "bg-[#fff] text-[#000]" : "bg-[#000] text-[#fff]"}`}>
+					<SidebarGroupLabel className={`${!isDarkTheme ? "text-[#000]/60" : "text-[#fff]/60"}`}>Items</SidebarGroupLabel>
 
 					<SidebarGroupContent>
 						<SidebarMenu>

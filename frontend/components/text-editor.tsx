@@ -48,9 +48,10 @@ interface CreateMemo extends PostMemo {
 
 interface TextEditorProps {
 	onMemoCreate: (memo: Memo) => void;
+	isDarkTheme: boolean;
 }
 
-export function TextEditor({ onMemoCreate }: TextEditorProps) {
+export function TextEditor({ onMemoCreate, isDarkTheme }: TextEditorProps) {
 
 	const [newMemo, setNewMemo] = useState<PostMemo>({ title: '', content: '' })
 	const [suggestedTags, setSuggestedTags] = useState<suggestedTag[]>([])
@@ -86,18 +87,18 @@ export function TextEditor({ onMemoCreate }: TextEditorProps) {
 				placeholder="タイトル"
 				value={newMemo.title}
 				onChange={(e) => setNewMemo({ ...newMemo, title: e.target.value })}
-				className="mb-2"
+				className={`mb-2 ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
 			/>
 			<Textarea
 				placeholder="メモの内容"
 				value={newMemo.content}
 				onChange={(e) => setNewMemo({ ...newMemo, content: e.target.value })}
-				className="w-full p-2 border rounded mb-2"
+				className={`w-full p-2 border rounded mb-2 ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
 				rows={3}
 			/>
 			<div className='flex justify-start gap-x-3'>
-				<Button onClick={handleSubmit}>AI</Button>
-				<Button onClick={handleMemoCreate}>作成</Button>
+				<Button onClick={handleSubmit} className={`${!isDarkTheme ? "text-[#fff] bg-[#000] hover:bg-[#000]/60" : "text-[#000] bg-[#fff] hover:bg-[#fff]/60"}`}>AI</Button>
+				<Button onClick={handleMemoCreate} className={`${!isDarkTheme ? "text-[#fff] bg-[#000] hover:bg-[#000]/60" : "text-[#000] bg-[#fff] hover:bg-[#fff]/60"}`}>作成</Button>
 			</div>
 
 			{suggestedTags.length > 0 && (

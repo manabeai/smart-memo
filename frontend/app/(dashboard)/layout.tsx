@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react'
+import { cloneElement, useState } from 'react'
+import React from 'react';
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
@@ -11,6 +12,8 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { TextEditor } from "@/components/text-editor"
 import MemoComponent from "@/components/MemoComponent";
 import { SignInButton } from '@/components/sign-in-bottun'
+
+import Page from "./page"
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
@@ -38,11 +41,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			<TooltipProvider>
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-auto`}>
 					<SidebarProvider>
-						<AppSidebar />
+						<AppSidebar isDarkTheme={isDarkTheme} />
 						<main className={`h-auto w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
 							<div className={`h-auto w-full`}>
-								<div className={`flex justify-start`}>
-									<SidebarTrigger />
+								<div className={`flex justify-start ml-2 mt-2 gap-x-2`}>
+									<SidebarTrigger className={`bg-transparent ${!isDarkTheme ? 'text-black hover:bg-gray-100' : 'text-gray-100 hover:text-gray-100 hover:bg-purple-900'} transition-all duration-300`}/>
 									<div className="flex justify-between items-center mb-6">
 										<Button variant="ghost" size="icon" onClick={() => setIsDarkTheme(!isDarkTheme)}
 											className={`bg-transparent ${!isDarkTheme ? 'text-black hover:bg-gray-100' : 'text-gray-100 hover:text-gray-100 hover:bg-purple-900'} transition-all duration-300`}>
@@ -51,7 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 									</div>
 								</div>
 
-								{children}
+								<Page isDarkTheme={isDarkTheme} />
 							</div>
 						</main>
 					</SidebarProvider>
