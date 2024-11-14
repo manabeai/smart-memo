@@ -1,6 +1,8 @@
 'use client';
+
 import { useState } from 'react'
 import React from 'react';
+
 import localFont from "next/font/local";
 import "@/app/globals.css";
 import { Moon, Sun } from 'lucide-react';
@@ -8,6 +10,8 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Button } from '@/components/ui/button'
 import { AppSidebar } from "@/components/app-sidebar"
+
+import Page from "./page"
 
 import Page from "./page"
 
