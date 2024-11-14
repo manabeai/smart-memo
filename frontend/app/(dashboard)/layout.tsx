@@ -36,11 +36,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	return (
 		<html lang="ja">
 			<TooltipProvider>
-				<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}>
+				<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-auto`}>
 					<SidebarProvider>
 						<AppSidebar />
-						<main className={`h-screen w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
-							<div className={`h-full w-full`}>
+						<main className={`h-auto w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
+							<div className={`h-auto w-full`}>
 								<div className={`flex justify-start`}>
 									<SidebarTrigger />
 									<div className="flex justify-between items-center mb-6">
