@@ -39,7 +39,7 @@ const testTags: Tag[] = [
   { id: 5, name: "学習" },
 ]
 
-export function AppSidebar({ tags = testTags, onClickTag }: AppSidebarProps) {
+export function AppSidebar({ tags, onClickTag }: AppSidebarProps) {
   const [isTagsOpen, setIsTagsOpen] = useState(false)
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null)
 

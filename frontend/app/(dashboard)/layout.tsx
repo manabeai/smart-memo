@@ -52,31 +52,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	}, []); 
 	
 	const handleTagClick = (tagId: number) => {
-	setSelectedTag(tagId);
+	  setSelectedTag(tagId);
 	};
 	
 	return (
 		<html lang="ja">
 			<TooltipProvider>
 				<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-auto`}>
-					<SidebarProvider>
-						<AppSidebar tags={tags} onClickTag={handleTagClick} />
-						<main className={`h-auto w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
-							<div className={`h-auto w-full`}>
-								<div className={`flex justify-start`}>
-									<SidebarTrigger />
-									<div className="flex justify-between items-center mb-6">
-										<Button variant="ghost" size="icon" onClick={() => setIsDarkTheme(!isDarkTheme)}
-											className={`bg-transparent ${!isDarkTheme ? 'text-black hover:bg-gray-100' : 'text-gray-100 hover:text-gray-100 hover:bg-purple-900'} transition-all duration-300`}>
-											{isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
-										</Button>
-									</div>
-								</div>
 
 								{children}
-							</div>
-						</main>
-					</SidebarProvider>
+
 				</body>
 			</TooltipProvider>
 		</html>
