@@ -30,12 +30,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_071735) do
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.bigint "memo_id", null: false
     t.bigint "tag_id", null: false
