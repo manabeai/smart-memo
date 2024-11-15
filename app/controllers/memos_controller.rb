@@ -102,7 +102,7 @@ class MemosController < ApplicationController
     http.use_ssl = true
     request = Net::HTTP::Post.new(url.path, {
       'Content-Type' => 'application/json',
-      'Authorization' => "Bearer #{Rails.application.credentials[:OPENAI_KEY]}"
+      'Authorization' => "Bearer #{Rails.application.credentials[:OPENAI_KEY] || ENV["OPENAI_KEY"]}"
     })
     request.body = data.to_json
     response = http.request(request)
