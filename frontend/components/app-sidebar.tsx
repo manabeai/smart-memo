@@ -39,8 +39,8 @@ export function AppSidebar({ tags, onClickTag, isDarkTheme }: AppSidebarProps) {
     
       <Sidebar>
         <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>アイテム</SidebarGroupLabel>
+          <SidebarGroup className={`h-full ${!isDarkTheme ? "bg-[#fff] text-[#000]" : "bg-[#000] text-[#fff]"}`}>
+            <SidebarGroupLabel className={`${!isDarkTheme ? "text-[#000]/60" : "text-[#fff]/60"}`}>アイテム</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
