@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	watchOptions: {
+		pollIntervalMs: 5000,
+	},
 };
 
 export default nextConfig
