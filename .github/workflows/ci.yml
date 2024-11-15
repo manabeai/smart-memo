@@ -55,5 +55,6 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           DB_HOST: localhost
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         run: |
           bundle exec rspec
