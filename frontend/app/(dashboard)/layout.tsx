@@ -10,7 +10,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Button } from '@/components/ui/button'
 import { AppSidebar } from "@/components/app-sidebar"
 
-import Page from "./page"
+import Page from "@/app/(dashboard)/page";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",

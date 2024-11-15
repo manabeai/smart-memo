@@ -25,9 +25,10 @@ export interface MemoCardProps {
   memo: Memo;
   onDelete: (id: number) => void;
   onUpdate: (updatedMemo: Memo) => void;  // 編集後のメモを親コンポーネントに渡す
+  isDarkTheme: boolean;
 };
 
-export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) => {
+export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, isDarkTheme }) => {
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
@@ -55,8 +56,8 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) 
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.3 }}
     >
-      <Card style={{ backgroundColor: '#ffffff' }}>
-        <CardHeader>
+      <Card className={`${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"} transition hover:opacity-75 hover:scale-105`}>
+        <CardHeader className=''>
           <div className="flex justify-between items-center relative">
             {isEditingTitle ? (
               <Input
@@ -78,13 +79,6 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate }) 
               >
                 <X className="h-4 w-4" />
               </Button>
-              {/* <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsEditingContent(true)}  // 内容編集モードを開く
-              >
-                <Edit className="h-4 w-4" />
-              </Button> */}
             </div>
           </div>
         </CardHeader>
