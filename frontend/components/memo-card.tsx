@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-type Tag = {
+export type Tag = {
   id: number;
   name: string;
 }

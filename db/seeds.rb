@@ -1,28 +1,6 @@
 require 'database_cleaner/active_record'
 DatabaseCleaner.clean_with(:truncation)
 
-Post.create!(
-  [
-    {
-      title: '一石二鳥'
-    },
-    {
-      title: '七転八起'
-    },
-    {
-      title: '温故知新'
-    },
-    {
-      title: '千載一遇'
-    },
-    {
-      title: '風林火山'
-    }
-  ]
-)
-
-# db/seeds.rb
-
 # 既存のデータを削除（開発環境のため）
 User.destroy_all
 Tag.destroy_all
