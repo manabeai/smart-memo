@@ -55,7 +55,7 @@ const Page = () => {
   }
 
   const handleTagClick = (tagId: number) => {
-    setSelectedTag(tagId);
+    setSelectedTag((prevTagId) => (prevTagId === tagId ? null : tagId));
   };
 
   const filteredMemos = selectedTag
