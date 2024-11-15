@@ -30,6 +30,7 @@ export interface MemoCardProps {
 
 export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, isDarkTheme }) => {
 
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null)
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [updatedMemo, setUpdatedMemo] = useState({ ...memo });
@@ -39,6 +40,11 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, is
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	// テキストエリアの高さを自動調整
+	if (textareaRef.current) {
+		textareaRef.current.style.height = 'auto'
+		textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+	}
     setUpdatedMemo({ ...updatedMemo, content: e.target.value });
   };
 
@@ -65,16 +71,16 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, is
                 onChange={handleTitleChange}
                 autoFocus
                 onBlur={() => setIsEditingTitle(false)}  // 編集終了
-                className="w-full"
+                className={`w-[85%] ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
               />
             ) : (
-              <CardTitle onClick={() => setIsEditingTitle(true)}>{memo.title}</CardTitle>
+              <CardTitle onClick={() => setIsEditingTitle(true)} className="overflow-hidden min-h-5 w-[85%]">{memo.title}</CardTitle>
             )}
             <div className="flex space-x-2">
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-1 right-1"
+                className="absolute top-0 right-0"
                 onClick={() => onDelete(memo.id)}
               >
                 <X className="h-4 w-4" />
@@ -85,14 +91,16 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, is
         <CardContent>
           {isEditingContent ? (
             <textarea
+			  ref={textareaRef}
               value={updatedMemo.content}
+			  onFocus={textareaRef.current ? (e) => {textareaRef.current.style.height = "auto"; textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`} : () => {}}
               onChange={handleContentChange}
               onBlur={() => setIsEditingContent(false)}  // 編集終了
-              className="w-full"
+              className={`w-full resize-none overflow-y-auto max-h-[65vh] ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
               autoFocus
             />
           ) : (
-            <p onClick={() => setIsEditingContent(true)}>{memo.content}</p>  // クリックで編集モードへ
+            <p onClick={() => setIsEditingContent(true)} className="overflow-clip">{memo.content}</p>  // クリックで編集モードへ
           )}
           <div className="mt-2">
             {memo.tags.map((tag, index) => (
@@ -103,10 +111,12 @@ export const MemoCard: React.FC<MemoCardProps> = ({ memo, onDelete, onUpdate, is
           </div>
         </CardContent>
         <CardFooter>
-          <p className="text-xs text-gray-500">Created on {memo.created_at.toString()}</p>
-          {(isEditingTitle || isEditingContent) && (
-            <Button onClick={handleSubmitEdit} className="mt-4">Save</Button>
-          )}
+		  <div className="flex gap-4 justify-between items-center">
+			<p className="text-xs text-gray-500">作成日時 {memo.created_at.toString()}</p>
+			{(isEditingTitle || isEditingContent) && (
+			  <Button onClick={handleSubmitEdit}>保存</Button>
+			)}
+		  </div>
         </CardFooter>
       </Card>
     </motion.div>

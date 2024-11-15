@@ -72,7 +72,7 @@ const Page = () => {
             <SidebarTrigger />
             <div className="flex justify-between items-center mb-6">
               <Button variant="ghost" size="icon" onClick={() => setIsDarkTheme(!isDarkTheme)}
-                className={`bg-transparent ${!isDarkTheme ? 'text-black hover:bg-gray-100' : 'text-gray-100 hover:text-gray-100 hover:bg-purple-900'} transition-all duration-300`}>
+                className={`bg-transparent ${!isDarkTheme ? "text-[#000] hover:bg-[#fff]/60" : "text-[#fff] hover:text-[#fff] hover:bg-[#000]/60"} transition-all duration-300`}>
                 {isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
               </Button>
             </div>
