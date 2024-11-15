@@ -52,14 +52,14 @@ class MemosController < ApplicationController
     url = URI.parse('https://api.openai.com/v1/chat/completions')
     title = params[:title]
     content = params[:content]
-    tags_list = Tag.where(user_id: 1).pluck(:id, :name).map { |id, name| { id: id, name: name } }
+    tags_list = Tag.where(user_id: @user_id).pluck(:id, :name).map { |id, name| { id: id, name: name } }
     tags_list_to_message = tags_list.map { |hash| "[#{hash[:id]}, #{hash[:name]}]" }.join(', ')
     data = {
       model: "gpt-4o-2024-08-06",
       messages: [
         {
           role: "system",
-          content: "あなたは非常に優秀なメモアプリのタグを提案するプロですユーザーはメモに書いた内容と彼が作ったタグ一覧をあなたに提示します。あなたの仕事は、ユーザーが既に作ったタグの中からメモの内容にふさわしいものを選び3つから6つ配列で提案することです。もし、あなたが提示するタグがユーザーが作ったタグの中に既にあるものであればis_user_definedをそのIDに、あなたが考えたものであればnullとしてください。最低でも一つはあなた自信が考えた新しいタグを解答に含めてください。ユーザーの作成したタグの中にふさわしいものがない場合、全てあなたの提案するタグでも構いません"
+          content: "あなたは非常に優秀なメモアプリのタグを提案するプロですユーザーはメモに書いた内容と彼が作ったタグ一覧をあなたに提示します。あなたの仕事は、ユーザーが既に作ったタグの中からメモの内容にふさわしいものを選び3つから6つ配列で提案することです。もし、あなたが提示するタグがユーザーが作ったタグの中に既にあるものであればis_user_definedをそのIDに、あなたが考えたものであればnullとしてください。最低でも一つはあなた自身が考えた新しいタグを解答に含めてください。ユーザーの作成したタグの中にふさわしいものがない場合、全てあなたの提案するタグでも構いません。"
         },
         {
           role: "user",

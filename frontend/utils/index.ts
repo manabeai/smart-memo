@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 export const api = Axios.create({
     baseURL: API_URL,
     withCredentials: true,
-    timeout: 5000,
+    timeout: 50000,
     headers: {
         'Content-Type': 'application/json'
     },
