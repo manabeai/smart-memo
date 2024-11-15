@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button"
 import "@/app/globals.css";
 
-export default function RootLayout() {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="w-screen h-screen flex flex-col justify-center items-center">
-        <Button variant="ghost" className="w-10 h-auto rounded bg-black-500 hover:bg-black-500/60">Hello!!</Button>
+        {children}
       </body>
     </html>
   )
