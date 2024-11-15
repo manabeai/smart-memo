@@ -1,36 +1,16 @@
 'use client'
 import React, { useState } from 'react'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Badge } from "@/components/ui/badge"
 
-import { toast } from "@/hooks/use-toast"
-import { Button } from "./ui/button"
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
 import api from '@/utils/index'
-import { Memo, Tag } from '@/components/memo-card'
+import { Memo } from '@/components/memo-card'
 
-  
-const FormSchema = z.object({
-	title: z
-		.string(),
-	content: z
-		.string()
-		.min(1, {
-			message: "何も入力されていません",
-		}),
-});
+type Tag = {
+	name: string;
+}
 
 type suggestedTag = {
 	name: string
@@ -42,15 +22,12 @@ interface PostMemo {
 	content: string
 };
 
-interface CreateMemo extends PostMemo {
-	tags: suggestedTag[]
-};
-
 interface TextEditorProps {
 	onMemoCreate: (memo: Memo) => void;
+	isDarkTheme: boolean;
 }
 
-export function TextEditor({ onMemoCreate }: TextEditorProps) {
+export function TextEditor({ onMemoCreate, isDarkTheme }: TextEditorProps) {
 
 	const [newMemo, setNewMemo] = useState<PostMemo>({ title: '', content: '' })
 	const [suggestedTags, setSuggestedTags] = useState<suggestedTag[]>([])
@@ -86,18 +63,18 @@ export function TextEditor({ onMemoCreate }: TextEditorProps) {
 				placeholder="タイトル"
 				value={newMemo.title}
 				onChange={(e) => setNewMemo({ ...newMemo, title: e.target.value })}
-				className="mb-2"
+				className={`mb-2 ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
 			/>
 			<Textarea
 				placeholder="メモの内容"
 				value={newMemo.content}
 				onChange={(e) => setNewMemo({ ...newMemo, content: e.target.value })}
-				className="w-full p-2 border rounded mb-2"
+				className={`w-full p-2 border rounded mb-2 ${!isDarkTheme ? "bg-[#fff] text-[#000]":"bg-[#000] text-[#fff]"}`}
 				rows={3}
 			/>
 			<div className='flex justify-start gap-x-3'>
-				<Button onClick={handleSubmit}>AI</Button>
-				<Button onClick={handleMemoCreate}>作成</Button>
+				<Button onClick={handleSubmit} className={`${!isDarkTheme ? "text-[#fff] bg-[#000] hover:bg-[#000]/60" : "text-[#000] bg-[#fff] hover:bg-[#fff]/60"}`}>AI</Button>
+				<Button onClick={handleMemoCreate} className={`${!isDarkTheme ? "text-[#fff] bg-[#000] hover:bg-[#000]/60" : "text-[#000] bg-[#fff] hover:bg-[#fff]/60"}`}>作成</Button>
 			</div>
 
 			{suggestedTags.length > 0 && (

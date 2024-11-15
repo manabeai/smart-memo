@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Home, Tag, Settings, ChevronDown } from "lucide-react"
+import { Home, Settings, ChevronDown, Tag as IconTagg } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-// import * as Lucide from 'lucide-react';
+import { Tag } from '@/components/memo-card'
 
 import {
   Sidebar,
@@ -17,29 +17,16 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
-  SidebarProvider,
 } from '@/components/ui/sidebar'
 
-type Tag = {
-  id: number;
-  name: string;
-};
-
-export type AppSidebarProps = {
-  tags: Tag[];
+interface AppSidebarProps {
+  tags: Tag[]
   onClickTag: (tagId: number) => void;
+	isDarkTheme: boolean;
 }
 
-// テスト用のタグデータ
-const testTags: Tag[] = [
-  { id: 1, name: "仕事" },
-  { id: 2, name: "個人" },
-  { id: 3, name: "アイデア" },
-  { id: 4, name: "プロジェクト" },
-  { id: 5, name: "学習" },
-]
+export function AppSidebar({ tags, onClickTag, isDarkTheme }: AppSidebarProps) {
 
-export function AppSidebar({ tags, onClickTag }: AppSidebarProps) {
   const [isTagsOpen, setIsTagsOpen] = useState(false)
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null)
 
@@ -49,6 +36,7 @@ export function AppSidebar({ tags, onClickTag }: AppSidebarProps) {
   }
 
   return (
+    
       <Sidebar>
         <SidebarContent>
           <SidebarGroup>
@@ -69,7 +57,7 @@ export function AppSidebar({ tags, onClickTag }: AppSidebarProps) {
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton className="w-full justify-between">
                         <div className="flex items-center">
-                          <Tag className="mr-2 h-4 w-4" />
+                          <IconTagg className="mr-2 h-4 w-4" />
                           <span>タグ</span>
                         </div>
                         <ChevronDown className={`h-4 w-4 transition-transform ${isTagsOpen ? 'rotate-180' : ''}`} />

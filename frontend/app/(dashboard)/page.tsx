@@ -1,11 +1,11 @@
 'use client';
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import MemoList from '@/components/memo-list'
 import { TextEditor } from '@/components/text-editor'
 import { Memo, Tag } from '@/components/memo-card'
 import api from '@/utils/index'
 import { Button } from '@/components/ui/button'
-import { PlusCircle, Moon, Sun, Search, Pin, Trash, Mic, Image, CheckSquare, Type, X, Archive, Share2, Twitter, Link, MessageCircle, Grid, List, Edit, Sparkles } from 'lucide-react';
+import { Moon, Sun, } from 'lucide-react';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from '@/components/app-sidebar'
 
@@ -64,8 +64,8 @@ const Page = () => {
 
   return (
 
-      <SidebarProvider>
-      <AppSidebar tags={tags} onClickTag={handleTagClick} />
+    <SidebarProvider>
+      <AppSidebar tags={tags} onClickTag={handleTagClick} isDarkTheme={isDarkTheme} />
       <main className={`h-auto w-screen bg-gradient-to-br ${!isDarkTheme ? 'from-pink-200 to-blue-200' : 'from-gray-900 to-purple-900'}`}>
         <div className={`h-auto w-full`}>
           <div className={`flex justify-start`}>
@@ -79,10 +79,10 @@ const Page = () => {
           </div>
 
         </div>
-        <TextEditor onMemoCreate={handleNewMemo} />
-        <MemoList memos={filteredMemos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} />
+        <TextEditor onMemoCreate={handleNewMemo} isDarkTheme={isDarkTheme} />
+        <MemoList memos={filteredMemos} onDelete={handleDeleteMemo} onUpdate={handleUpdateMemo} isDarkTheme={isDarkTheme} />
       </main>
-      </SidebarProvider>
+    </SidebarProvider>
   )
 };
 
