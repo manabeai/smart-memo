@@ -17,7 +17,7 @@ class SignInsController < ApplicationController
     response.set_cookie("user_session", {
       value: new_uuid,
       expires: 100.hours.from_now,
-      domain: "localhost",
+      domain: Rails.env.development? ? "localhost" : "54.64.213.56",
       secure: Rails.env.production?,
       same_site: :Lax # XXX: 開発中はNoneにするとエラーが発生。(NoneはSecureとしか使えず、SecureはTLSでのみ有効なため)
     })
