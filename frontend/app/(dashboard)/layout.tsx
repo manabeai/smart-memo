@@ -8,6 +8,7 @@ import "@/app/globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { SidebarProvider } from "@/components/ui/sidebar"
 
+import Page from "@/app/(dashboard)/page";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
