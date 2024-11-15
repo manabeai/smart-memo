@@ -27,7 +27,7 @@ api.interceptors.response.use(
     (error) => {
     // レスポンスの内容を表示
         console.error('Error Response:', error);
-        // window.location.href = '/sign_ins';  
+        window.location.href = '/sign_ins';  
         return Promise.reject(error);
     }
 );
