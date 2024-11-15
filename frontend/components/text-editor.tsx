@@ -80,6 +80,7 @@ export function TextEditor({ onMemoCreate, isDarkTheme }: TextEditorProps) {
 		setSuggestedTags([])
 		setSelectedTags([])
 		setNewMemo({ title: '', content: '' })
+		setPrevMemoLength(0)
 		console.log('メモ作成に成功' + response)
 		onMemoCreate(response.data);
 	}
