@@ -23,20 +23,18 @@ const geistMono = localFont({
 
 interface RootLayoutProps {
 	children: ReactNode;
-  }
+}
 
 export default function RootLayout({ children }: RootLayoutProps) {
-	
+
 	return (
 		<html lang="ja">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased h-auto`}>
-			<SidebarProvider>
-			<TooltipProvider>
-				
-				    {children}
-				
-			</TooltipProvider>
-			</SidebarProvider>
+				<SidebarProvider>
+					<TooltipProvider>
+						{children}
+					</TooltipProvider>
+				</SidebarProvider>
 			</body>
 		</html>
 
