@@ -17,7 +17,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: test_db
-          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -56,5 +55,6 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           DB_HOST: localhost
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         run: |
           bundle exec rspec
