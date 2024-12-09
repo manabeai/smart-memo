@@ -70,7 +70,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image_id }}
 
       - name: サービスにタスク定義を反映しデプロイ
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.1.2
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.2.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
